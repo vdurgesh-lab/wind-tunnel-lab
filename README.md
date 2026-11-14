@@ -37,6 +37,10 @@ assets/data/ofi-image.js   oil-film image for the fringe-spacing tool
 
 Open `index.html` in a browser. Everything works when opened from disk, including the interactive pLIF and oil-film tools.
 
+## Logo
+
+`assets/img/logo.svg` and `assets/img/favicon.svg` show a real airfoil with real streamlines. The section comes from the NACA four-digit equations with a hidden value: maximum camber is 3.1428 % of chord (22/7, the classic approximation of π), located at 40 % chord, with 12 % thickness. It is pitched 6° to the flow. The streamlines are traced through a Hess–Smith panel-method solution of the potential flow around it (Cl ≈ 1.13).
+
 ## Editing
 
 - Text, links and captions are in `index.html`. Search for the section ids: `capabilities`, `research`, `gust`, `plif`, `ofi`, `owl`, `flag`, `people`, `facility`, `instruments`, `contact`.
