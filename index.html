@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Idaho Wind Tunnel Laboratory</title>
+<meta name="description" content="The University of Idaho Wind Tunnel Laboratory measures velocity fields, forces, wall shear stress and scalar mixing in low-speed flows.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Crect width=%2740%27 height=%2740%27 rx=%276%27 fill=%27%230E1113%27/%3E%3Cpath d=%27M5 22 C 12 11, 26 10, 36 18 C 25 19, 14 22, 5 22 Z%27 fill=%27%23F1B300%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0E1113">
+<meta property="og:title" content="Experimental Aerodynamics Research Laboratory · University of Idaho">
+<meta property="og:description" content="Wind tunnel research in unsteady aerodynamics, bio-inspired flight and fluid–structure interaction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: dark "test-section" bands hold the research data in identical 16:10 frames; light bands hold people and reading text. Gold marks anything you can act on. */
+:root{
+  --ink:#0E1113; --ink-2:#161A1D; --ink-3:#1E2327;
+  --paper:#EEF0EE; --paper-2:#FFFFFF; --matte:#F4F5F3;
+  --gold:#F1B300; --gold-deep:#8A6400;
+  --text:#15191B; --muted:#535C60;
+  --on-ink:#E8ECEC; --on-ink-muted:#9AA5A9;
+  --rule:#C9CFCC; --rule-dark:#2A3034;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --wrap:min(1240px, calc(100% - 2*clamp(16px,5vw,64px)));
+  --head-h:64px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img,video,canvas{max-width:100%;height:auto;display:block}
+a{color:inherit;text-underline-offset:4px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.02;letter-spacing:.005em;text-wrap:balance;margin:0}
+h2{font-size:clamp(36px,4.6vw,58px);text-transform:uppercase}
+h3{font-size:clamp(24px,2.4vw,30px);text-transform:uppercase}
+p{margin:0}
+.wrap{width:var(--wrap);margin-inline:auto}
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+.dark .eyebrow{color:var(--gold)}
+.lede{font-size:clamp(17px,1.6vw,20px);max-width:62ch}
+.muted{color:var(--muted)} .dark .muted{color:var(--on-ink-muted)}
+.band{padding-block:clamp(56px,8vw,104px)}
+.dark{background:var(--ink);color:var(--on-ink);color-scheme:dark}
+.section-head{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,44px);max-width:780px}
+figure{margin:0}
+figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
+.dark figcaption{color:var(--on-ink-muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--body);padding:12px 18px;border-radius:2px;text-decoration:none;border:1px solid var(--gold);cursor:pointer}
+.btn-solid{background:var(--gold);color:#16130A} .btn-solid:hover{background:#FFC72C}
+.btn-ghost{background:transparent;color:inherit} .btn-ghost:hover{background:rgba(241,179,0,.12)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font:500 12px var(--mono);padding:4px 8px;border:1px solid var(--rule-dark);color:var(--on-ink-muted);border-radius:2px}
+
+/* Header */
+.site-head{position:sticky;top:0;z-index:30;background:rgba(14,17,19,.96);backdrop-filter:blur(8px);color:var(--on-ink);border-bottom:1px solid var(--rule-dark)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:var(--head-h)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand b{display:block;font:600 20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase}
+.brand small{display:block;font:12px/1.3 var(--body);color:var(--on-ink-muted)}
+.site-nav{display:flex;gap:clamp(12px,2vw,28px);flex-wrap:wrap}
+.site-nav a{font:500 14px var(--body);text-decoration:none;color:var(--on-ink-muted);padding:6px 0;border-bottom:2px solid transparent}
+.site-nav a:hover{color:var(--on-ink);border-color:var(--gold)}
+
+/* Hero */
+.hero{padding-block:clamp(40px,6vw,80px) 0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:center}
+.hero h1{font-size:clamp(32px,5.4vw,78px);text-transform:uppercase;margin:16px 0 20px;line-height:.95}
+.hero h1 span{display:block}
+.hero h1 span{color:var(--gold)}
+.hero-figure img{width:100%;max-height:420px;object-fit:cover;border-radius:3px}
+.specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule-dark);margin-top:clamp(40px,6vw,72px)}
+.specs div{padding:22px 20px 26px 0;border-right:1px solid var(--rule-dark)}
+.specs div+div{padding-left:20px}
+.specs div:last-child{border-right:0}
+.specs b{display:block;font:600 clamp(28px,3.4vw,44px)/1 var(--display);font-variant-numeric:tabular-nums}
+.specs span{display:block;font-size:14px;color:var(--on-ink-muted);margin-top:8px}
+
+/* Capabilities */
+.caps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.cap{background:var(--paper-2);padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:background .15s}
+.cap:hover{background:#FFF8E4}
+.cap .sym{font:500 30px/1 var(--mono)}
+.cap h3{font-size:22px}
+.cap p{font-size:14.5px;color:var(--muted);flex:1}
+.cap .go{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold-deep)}
+
+/* ===== Research ===== */
+.research-intro{padding-bottom:40px}
+.rindex{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.rcard{display:grid;grid-template-rows:auto 1fr;text-decoration:none;background:var(--ink-2);border:1px solid var(--rule-dark);border-radius:3px;overflow:hidden;transition:border-color .15s,transform .15s}
+.rcard:hover{border-color:var(--gold);transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){.rcard:hover{transform:none}}
+.rcard img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.rcard div{padding:14px 14px 16px;display:grid;gap:6px;align-content:start}
+.rcard .n{font:500 12px var(--mono);color:var(--gold);letter-spacing:.1em}
+.rcard b{font:600 20px/1.05 var(--display);text-transform:uppercase}
+.rcard span:last-child{font-size:13px;color:var(--on-ink-muted)}
+
+.rnav{position:sticky;top:var(--sticky-top,var(--head-h));z-index:20;background:rgba(14,17,19,.96);backdrop-filter:blur(8px);border-block:1px solid var(--rule-dark)}
+.rnav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.rnav a{flex:none;display:flex;gap:8px;align-items:baseline;padding:14px 14px 12px;text-decoration:none;color:var(--on-ink-muted);font:500 14px var(--body);border-bottom:2px solid transparent;white-space:nowrap}
+.rnav a i{font:500 12px var(--mono);font-style:normal;color:var(--on-ink-muted)}
+.rnav a:hover{color:var(--on-ink)}
+.rnav a[aria-current="true"]{color:var(--on-ink);border-color:var(--gold)}
+.rnav a[aria-current="true"] i{color:var(--gold)}
+
+.study{padding-block:clamp(48px,6vw,80px);border-top:1px solid var(--rule-dark)}
+.study:first-of-type{border-top:0}
+.study-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,32px);align-items:end;margin-bottom:28px}
+.study-num{font:600 clamp(56px,7vw,92px)/.78 var(--display);color:var(--gold)}
+.study-head h2{font-size:clamp(32px,3.6vw,48px);margin-top:6px}
+.study-body{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(24px,3.5vw,44px);align-items:start}
+
+/* Every research figure sits in the same 16:10 frame and keeps its own proportions */
+.stage{position:relative;aspect-ratio:16/10;background:var(--matte);border:1px solid var(--rule-dark);border-radius:3px;overflow:hidden}
+.stage.black{background:#000}
+.slide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);place-items:center;padding:14px}
+.slide[hidden]{display:none}
+.slide>img,.slide>video,.slide>canvas{width:100%;height:100%;object-fit:contain}
+.slide.flush{padding:0}
+.slide.pair{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;background:#fff}
+.slide.pair video{width:100%;height:100%;object-fit:contain;background:#fff}
+.expand{position:absolute;right:10px;top:10px;z-index:2;width:36px;height:36px;display:grid;place-items:center;border-radius:2px;border:1px solid rgba(0,0,0,.15);background:rgba(255,255,255,.9);color:#15191B;cursor:pointer;font-size:16px}
+.expand:hover{background:var(--gold)}
+.expand[hidden]{display:none}
+.stage-cap{min-height:3em}
+.thumbs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.thumbs button{width:92px;aspect-ratio:4/3;padding:4px;background:var(--matte);border:2px solid var(--rule-dark);border-radius:2px;cursor:pointer;opacity:.7;transition:opacity .15s,border-color .15s}
+.thumbs button img{width:100%;height:100%;object-fit:contain}
+.thumbs button[aria-selected="true"]{border-color:var(--gold);opacity:1}
+.thumbs button:hover{opacity:1}
+.thumbs button.dark-thumb{background:#000}
+
+.notes{display:grid;gap:18px}
+.notes h3{font:500 12px var(--mono);letter-spacing:.12em;color:var(--on-ink-muted);text-transform:uppercase}
+.notes p{color:var(--on-ink)}
+.legend{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:14.5px;color:var(--on-ink)}
+.legend li{display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:start}
+.legend .sw{width:14px;height:14px;margin-top:5px;border-radius:2px;display:block}
+.note-block{border-top:1px solid var(--rule-dark);padding-top:16px;display:grid;gap:10px}
+
+/* Video controls */
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px 0 0}
+.controls[hidden]{display:none}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:2px;background:transparent;border:1px solid var(--rule-dark);color:var(--on-ink);cursor:pointer;flex:none}
+.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+.icon-btn.primary{background:var(--gold);border-color:var(--gold);color:#16130A}
+.icon-btn.primary:hover{background:#FFC72C;color:#16130A}
+.scrub{flex:1 1 200px;accent-color:var(--gold);min-width:140px}
+.readout{font:500 13px/1 var(--mono);color:var(--on-ink-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.seg{display:inline-flex;border:1px solid var(--rule-dark);border-radius:2px;overflow:hidden;flex-wrap:wrap}
+.seg button{font:500 12.5px var(--mono);background:transparent;color:var(--on-ink-muted);border:0;border-right:1px solid var(--rule-dark);padding:8px 10px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--gold);color:#16130A}
+.seg button:hover:not([aria-pressed="true"]){color:var(--on-ink)}
+
+/* pLIF tool inside the 16:10 frame */
+.plif-tool{position:absolute;inset:0;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr);background:var(--ink-2)}
+.plif-view{position:relative;height:100%;width:290px;background:#000}
+.plif-view canvas{width:100%;height:100%;cursor:crosshair}
+.plif-hud{position:absolute;left:8px;top:8px;font:500 11.5px/1.5 var(--mono);color:#fff;background:rgba(0,0,0,.55);padding:5px 7px;border-radius:2px;pointer-events:none;font-variant-numeric:tabular-nums}
+.plif-bar{position:absolute;right:8px;top:8px;bottom:8px;width:8px;border-radius:2px;border:1px solid rgba(255,255,255,.25)}
+.plif-panel{padding:16px 18px;display:grid;gap:14px;align-content:start;overflow:auto;min-width:0}
+.plif-panel>*{min-width:0}
+.field{display:grid;gap:7px}
+.lab{font:500 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-muted)}
+.field input[type=range]{accent-color:var(--gold);width:100%}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filmstrip{display:flex;gap:4px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:thin}
+.filmstrip button{flex:none;padding:0;border:2px solid transparent;background:#000;border-radius:2px;cursor:pointer;opacity:.6}
+.filmstrip button img{width:28px;height:45px;object-fit:cover}
+.filmstrip button[aria-current="true"]{border-color:var(--gold);opacity:1}
+.mode-note{font-size:13.5px;color:var(--on-ink-muted)}
+.chart-box{background:#0B0D0F;border:1px solid var(--rule-dark);border-radius:2px}
+.chart-box canvas{width:100%;height:150px;cursor:pointer}
+.probe{font:13px/1.6 var(--mono);color:var(--on-ink);font-variant-numeric:tabular-nums;min-height:3.2em}
+
+/* OFI */
+.ofi-stage{touch-action:none}
+.ofi-stage canvas{cursor:crosshair}
+.panel-card{background:var(--ink-2);border:1px solid var(--rule-dark);border-radius:3px;padding:14px 16px;margin-top:12px}
+.panel-card canvas{width:100%;height:150px}
+.big-num{font:600 52px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--on-ink)}
+.big-num small{font:500 16px var(--mono);color:var(--on-ink-muted);margin-left:6px}
+.formula{font:15px/1.6 var(--mono);background:var(--ink-2);border-left:3px solid var(--gold);padding:12px 14px;color:var(--on-ink)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:15px;color:var(--on-ink)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:8px}
+.steps li::before{content:counter(s);font:600 14px/22px var(--mono);width:24px;height:24px;text-align:center;border:1px solid var(--gold);color:var(--gold);border-radius:50%}
+
+/* People / teaching */
+.people{display:grid;grid-template-columns:1.7fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;aspect-ratio:2/1}
+.people figure{position:relative;overflow:hidden;border-radius:3px;background:#222;margin:0}
+.people figure:first-child{grid-row:span 2}
+.people img{width:100%;height:100%;object-fit:cover}
+.people figcaption{position:absolute;left:0;right:0;bottom:0;margin:0;padding:28px 14px 12px;color:#fff;font-size:13.5px;background:linear-gradient(transparent,rgba(0,0,0,.75))}
+.labs-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:end;margin:clamp(40px,6vw,64px) 0 20px}
+.labs-head h3{font-size:clamp(26px,2.8vw,34px);margin-top:8px}
+.labs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.lab-frame{aspect-ratio:4/3;overflow:hidden;border-radius:3px;border:1px solid var(--rule);background:#ddd}
+.lab-frame img{width:100%;height:100%;object-fit:cover}
+.labs figcaption b{color:var(--text)}
+.outreach{margin-top:clamp(32px,5vw,48px);padding:20px 22px;border-left:3px solid var(--gold);background:var(--paper-2);display:grid;gap:6px;max-width:760px}
+.cards2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:28px}
+.tcard{background:var(--paper-2);border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+.tcard img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/2}
+.tcard div{padding:20px;display:grid;gap:10px;align-content:center}
+.tcard h3{font-size:24px}
+
+/* Facility */
+.facility{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.facility img{width:100%;border-radius:3px}
+.spec-table{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+.spec-table th,.spec-table td{text-align:left;padding:11px 0;border-bottom:1px solid var(--rule-dark);vertical-align:top}
+.spec-table th{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-muted);width:40%;padding-right:12px;padding-top:14px}
+.spec-table td{font-variant-numeric:tabular-nums}
+
+/* Instruments */
+.inst{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.inst section{border-top:3px solid var(--gold);padding-top:16px}
+.inst h3{font-size:24px;margin-bottom:10px}
+.inst ul{list-style:none;padding:0;margin:0;display:grid;gap:12px;font-size:14.5px}
+.inst li b{display:block;font-weight:600}
+.inst li span{color:var(--muted)}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:auto minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center}
+.contact .portrait{width:clamp(140px,16vw,210px);aspect-ratio:1;object-fit:cover;border-radius:3px;border:1px solid var(--rule-dark)}
+.contact h2{font-size:clamp(40px,5vw,66px)}
+.contact-card{border:1px solid var(--rule-dark);padding:22px;border-radius:3px;display:grid;gap:10px}
+.contact-card .mail{font:500 18px var(--mono);color:var(--gold);word-break:break-word;margin:0}
+.contact-card .mail span{color:var(--on-ink-muted)}
+.contact-card .links{display:flex;flex-wrap:wrap;gap:10px}
+.contact-card .links .btn{flex:1 1 auto;justify-content:center}
+.site-foot{background:var(--ink);color:var(--on-ink-muted);font-size:13px;border-top:1px solid var(--rule-dark);padding-block:22px}
+.site-foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* Lightbox */
+dialog.lightbox{border:0;padding:0;background:transparent;max-width:min(1400px,94vw);max-height:92vh;color:var(--on-ink)}
+dialog.lightbox::backdrop{background:rgba(5,7,8,.88)}
+dialog.lightbox figure{background:var(--matte);border-radius:3px;padding:12px;display:grid;gap:8px}
+dialog.lightbox img{max-height:80vh;width:auto;max-width:100%;margin-inline:auto;object-fit:contain}
+dialog.lightbox figcaption{color:var(--muted);margin:0}
+dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38px;border-radius:2px;border:0;background:var(--gold);color:#16130A;font-size:20px;cursor:pointer}
+
+@media (max-width:1100px){
+  .brand small{display:none}
+  .brand{flex:none}
+  .site-head .wrap{gap:4px 16px;flex-wrap:wrap;height:auto;min-height:64px;padding-block:8px}
+  .site-nav{flex-wrap:nowrap;gap:18px}
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{white-space:nowrap}
+  .rindex{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .caps{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:1020px){
+  .study-body,.facility,.hero-grid{grid-template-columns:1fr}
+  .contact{grid-template-columns:auto 1fr}
+  .contact-card{grid-column:1/-1}
+  .inst{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto}
+  .people figure{aspect-ratio:4/3}
+  .people figure:first-child{grid-column:span 2;grid-row:auto}
+  .tcard{grid-template-columns:1fr}
+  .labs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .labs-head{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  :root{--head-h:0px}
+  html{scroll-padding-top:56px}
+  .site-head{position:relative}
+  .site-head .wrap{flex-direction:column;align-items:flex-start;gap:6px;padding-block:10px;height:auto}
+  .site-nav{flex-wrap:wrap;gap:4px 16px}
+  .rnav{top:0}
+  .specs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .specs div{border-right:0;padding-left:0!important;border-bottom:1px solid var(--rule-dark)}
+  .rindex{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .caps{grid-template-columns:1fr 1fr}
+  .study-head{grid-template-columns:auto 1fr}
+  .study-head .tags{grid-column:1/-1}
+  .cards2{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  .people figure:first-child{grid-column:auto}
+  .labs{grid-template-columns:1fr}
+  /* pLIF stacks: the frame becomes the tool's own height */
+  .stage.tool{aspect-ratio:auto}
+  .plif-tool{position:static;grid-template-columns:1fr}
+  .plif-view{height:auto!important;width:min(100%,300px)!important;aspect-ratio:480/778;margin:12px auto 0}
+  .slide.pair{gap:6px;padding:6px}
+  .contact{grid-template-columns:1fr}
+}
+@media (max-width:420px){.rindex,.caps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Wind Tunnel Laboratory, back to top">
+      <svg width="40" height="28" viewBox="0 0 40 28" aria-hidden="true"><path d="M2 16 C 9 6, 24 5, 38 13 C 26 14, 13 17, 2 16 Z" fill="#F1B300"/><path d="M1 22 H39 M1 26 H31" stroke="#9AA5A9" stroke-width="1.5"/><path d="M1 6 H22" stroke="#9AA5A9" stroke-width="1.5"/></svg>
+      <span><b>Wind Tunnel Laboratory</b><small>University of Idaho · Mechanical Engineering</small></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#capabilities">Capabilities</a>
+      <a href="#research">Research</a>
+      <a href="#people">Students</a>
+      <a href="#facility">Facility</a>
+      <a href="#instruments">Instruments</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero dark" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">University of Idaho · Wind Tunnel Facility</div>
+        <h1 id="hero-title">Experimental <span>Aerodynamics</span> Research Laboratory</h1>
+        <p class="lede">We measure the flow around wings, feathers and flexible structures, and the forces that flow creates. Students and collaborators use the tunnel for research, coursework and demonstrations.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="#research">Explore the research ↓</a>
+          <a class="btn btn-ghost" href="#contact">Work with the lab</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <img src="assets/img/hero-owl-feather-laser.webp" alt="A green laser sheet illuminates a barn owl feather mounted in the transparent wind tunnel test section" width="1800" height="1249">
+        <figcaption style="color:var(--on-ink-muted)">A laser sheet cuts through a barn owl flight feather during a PIV run.</figcaption>
+      </figure>
+    </div>
+    <div class="specs" aria-label="Facility at a glance">
+      <div><b>18×18×36 in</b><span>Test section (45.7 × 45.7 × 91.4 cm)</span></div>
+      <div><b>3–67 m/s</b><span>Design range, from below 3.1 to above 67.1 m/s</span></div>
+      <div><b>6.25 : 1</b><span>Contraction ratio, open-circuit layout</span></div>
+      <div><b>5 methods</b><span>Velocity, force, wall shear, scalar and pressure measurement</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="band" id="capabilities" aria-labelledby="cap-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What we can measure</div>
+      <h2 id="cap-title">Experimental techniques</h2>
+      <p class="muted lede">Each method answers a different question. Select one to see real data recorded in the lab.</p>
+    </div>
+    <div class="caps">
+      <a class="cap" href="#gust"><span class="sym"><i>u</i>, <i>v</i>, <i>ω</i></span><h3>Velocity fields</h3><p>Particle image velocimetry maps velocity and vorticity across a laser-lit plane.</p><span class="go">Study 01 →</span></a>
+      <a class="cap" href="#plif"><span class="sym"><i>c</i>(<i>x</i>,<i>t</i>)</span><h3>Scalar mixing</h3><p>Planar laser-induced fluorescence images where a fluorescent dye travels and mixes.</p><span class="go">Study 02 →</span></a>
+      <a class="cap" href="#ofi"><span class="sym"><i>τ</i><sub>w</sub></span><h3>Wall shear stress</h3><p>Oil-film interferometry turns thinning oil drops into fringes whose spacing gives skin friction.</p><span class="go">Study 03 →</span></a>
+      <a class="cap" href="#owl"><span class="sym"><i>F</i>, <i>M</i></span><h3>Forces &amp; moments</h3><p>Six-axis load cells record lift, drag and moments on mounted models and feathers.</p><span class="go">Study 04 →</span></a>
+      <a class="cap" href="#instruments"><span class="sym"><i>p</i>′, <i>u</i>′</span><h3>Pressure &amp; turbulence</h3><p>Differential pressure transducers and hot-wire anemometry resolve fast fluctuations.</p><span class="go">Instruments →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<div class="dark" id="research">
+  <section class="band research-intro" aria-labelledby="research-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Research</div>
+        <h2 id="research-title">Featured research projects</h2>
+        <p class="muted lede">Each study shows the raw measurement, not just the conclusion. Play the movies, step through frames and probe the images yourself.</p>
+      </div>
+      <nav class="rindex" aria-label="Research studies">
+        <a class="rcard" href="#gust"><img src="assets/img/thumb-gust.webp" alt="" width="800" height="600"><div><span class="n">01 · PIV + force</span><b>Airfoil–gust interaction</b><span>Vortices hitting a wing, frame by frame</span></div></a>
+        <a class="rcard" href="#plif"><img src="assets/img/thumb-plif.webp" alt="" width="800" height="600"><div><span class="n">02 · pLIF</span><b>Dye release explorer</b><span>Recolor, scrub and probe 23 frames</span></div></a>
+        <a class="rcard" href="#ofi"><img src="assets/img/thumb-ofi.webp" alt="" width="800" height="600"><div><span class="n">03 · Oil film</span><b>Skin friction on a flat plate</b><span>Measure fringe spacing live</span></div></a>
+        <a class="rcard" href="#owl"><img src="assets/img/thumb-owl.webp" alt="" width="800" height="600"><div><span class="n">04 · PIV + force</span><b>Barn owl feather</b><span>Flow and loads on a real flight feather</span></div></a>
+        <a class="rcard" href="#flag"><img src="assets/img/thumb-flag.webp" alt="" width="800" height="600"><div><span class="n">05 · Shape tracking</span><b>Flapping flag</b><span>Self-excited motion and its modes</span></div></a>
+      </nav>
+    </div>
+  </section>
+
+  <nav class="rnav" aria-label="Jump to a study">
+    <div class="wrap" id="rnav">
+      <a href="#gust"><i>01</i>Airfoil–gust</a>
+      <a href="#plif"><i>02</i>pLIF explorer</a>
+      <a href="#ofi"><i>03</i>Oil-film skin friction</a>
+      <a href="#owl"><i>04</i>Barn owl feather</a>
+      <a href="#flag"><i>05</i>Flapping flag</a>
+    </div>
+  </nav>
+
+  <!-- STUDY 01 -->
+  <article class="study" id="gust" aria-labelledby="gust-title">
+    <div class="wrap">
+      <header class="study-head">
+        <span class="study-num" aria-hidden="true">01</span>
+        <div><div class="eyebrow">Unsteady aerodynamics</div><h2 id="gust-title">Airfoil meets a vortical gust</h2></div>
+        <div class="tags"><span class="tag">2D PIV</span><span class="tag">Load cell</span><span class="tag">Synchronized</span></div>
+      </header>
+      <div class="study-body">
+        <div>
+          <div class="stage gallery" id="gustStage">
+            <div class="slide flush" data-thumb="assets/img/airfoil-gust-poster.webp" data-label="Movie at 12°" data-cap="Lift coefficient and vorticity field at 12° angle of attack as gust vortices pass the airfoil. 5 frames per second." style="background:#f4f4f4">
+              <video id="gustVideo" src="assets/video/airfoil-gust-interaction.mp4" poster="assets/img/airfoil-gust-poster.webp" muted playsinline loop preload="metadata" aria-label="Video: lift coefficient and PIV vorticity field as vortices pass an airfoil at 12 degrees angle of attack"></video>
+            </div>
+          </div>
+          <div class="controls" id="gustControls">
+            <button class="icon-btn primary" id="gPlay" aria-label="Play">▶</button>
+            <button class="icon-btn" id="gBack" aria-label="Back one frame">⏮</button>
+            <button class="icon-btn" id="gFwd" aria-label="Forward one frame">⏭</button>
+            <input class="scrub" id="gScrub" type="range" min="0" max="20.4" step="0.2" value="0" aria-label="Position in video">
+            <span class="readout" id="gTime">0.0 / 20.4 s</span>
+            <div class="seg" role="group" aria-label="Playback speed" id="gSpeed"><button data-rate="0.25" aria-pressed="false">¼×</button><button data-rate="0.5" aria-pressed="false">½×</button><button data-rate="1" aria-pressed="true">1×</button><button data-rate="2" aria-pressed="false">2×</button></div>
+          </div>
+          <p class="stage-cap figcaption muted" style="font-size:13.5px;margin-top:10px"></p>
+          <div class="thumbs" role="tablist" aria-label="Study 01 figures"></div>
+        </div>
+        <aside class="notes">
+          <p>An oscillating cylinder upstream sheds vortices into the airfoil’s path. We record the velocity field with PIV and the lift at the same instant, so each swing in lift can be traced to the vortex that caused it.</p>
+          <div class="note-block">
+            <h3>How to read the movie</h3>
+            <ul class="legend">
+              <li><span class="sw" style="background:#fff"></span><span><b>Top trace:</b> lift coefficient <i>c</i><sub>l</sub> over time. The magenta dot marks the current instant.</span></li>
+              <li><span class="sw" style="background:linear-gradient(90deg,#2b2a8f,#3fd17c,#c31a12)"></span><span><b>Main panel:</b> vorticity <i>ω</i><sub>z</sub> (1/s) with velocity vectors.</span></li>
+              <li><span class="sw" style="background:#e33fd8"></span><span><b>Left panels:</b> velocity sampled along the black and magenta lines ahead of the leading edge.</span></li>
+            </ul>
+          </div>
+          <div class="note-block"><h3>Try this</h3><p class="muted" style="font-size:14.5px">Pause, then step with ← → to watch a vortex reach the leading edge just before lift peaks.</p></div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- STUDY 02 -->
+  <article class="study" id="plif" aria-labelledby="plif-title">
+    <div class="wrap">
+      <header class="study-head">
+        <span class="study-num" aria-hidden="true">02</span>
+        <div><div class="eyebrow">Flow visualization</div><h2 id="plif-title">pLIF explorer: follow the dye</h2></div>
+        <div class="tags"><span class="tag">pLIF</span><span class="tag">Run 209</span><span class="tag">40–62 s</span></div>
+      </header>
+      <div class="study-body">
+        <div>
+          <div class="stage tool black">
+            <div class="plif-tool">
+              <div class="plif-view">
+                <canvas id="plifCanvas" width="480" height="778" aria-label="pLIF image of the dye release, current frame"></canvas>
+                <div class="plif-hud" id="plifHud">Loading frames…</div>
+                <div class="plif-bar" id="plifBar"></div>
+              </div>
+              <div class="plif-panel">
+                <div class="row">
+                  <button class="icon-btn primary" id="pPlay" aria-label="Play">▶</button>
+                  <button class="icon-btn" id="pBack" aria-label="Previous frame">⏮</button>
+                  <button class="icon-btn" id="pFwd" aria-label="Next frame">⏭</button>
+                  <input class="scrub" id="pScrub" type="range" min="0" max="22" step="1" value="0" aria-label="Frame">
+                  <span class="readout" id="pFrameLab">01 / 23</span>
+                </div>
+                <div class="filmstrip" id="filmstrip" aria-label="Frames"></div>
+                <div class="field"><span class="lab">View</span>
+                  <div class="seg" role="group" aria-label="View mode" id="pMode"><button data-mode="frame" aria-pressed="true">Frame</button><button data-mode="trail" aria-pressed="false">Trail</button><button data-mode="arrival" aria-pressed="false">Arrival time</button></div></div>
+                <div class="field"><span class="lab">Color map</span>
+                  <div class="seg" role="group" aria-label="Color map" id="pCmap"><button data-cmap="inferno" aria-pressed="true">Inferno</button><button data-cmap="dye" aria-pressed="false">Dye</button><button data-cmap="viridis" aria-pressed="false">Viridis</button><button data-cmap="grey" aria-pressed="false">Grey</button></div></div>
+                <p class="mode-note" id="pModeNote">Each frame as recorded, background removed.</p>
+                <div class="row" style="gap:16px">
+                  <div class="field" style="flex:1 1 140px"><label class="lab" for="pGain">Gain <span id="pGainVal">1.6×</span></label><input id="pGain" type="range" min="0.6" max="4" step="0.1" value="1.6"></div>
+                  <div class="field" style="flex:1 1 140px"><label class="lab" for="pFps">Speed <span id="pFpsVal">6 fps</span></label><input id="pFps" type="range" min="1" max="15" step="1" value="6"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="muted" style="font-size:13.5px;margin-top:10px">Run 209, frames from 40 to 62 s of the processed sequence. Hover the image to read the signal at a point.</p>
+        </div>
+        <aside class="notes">
+          <p>A laser sheet makes a fluorescent dye glow, so brightness tracks how much dye lies in the plane. A released dye puff rolls up, then breaks into fingers as it descends.</p>
+          <div class="note-block">
+            <h3>Dye front depth · % of image height</h3>
+            <div class="chart-box"><canvas id="pChart" width="800" height="300" aria-label="Chart of dye front depth for each frame. Click to jump to a frame."></canvas></div>
+            <p class="muted" style="font-size:13px">Lowest row with dye signal in each frame. Click the chart to jump.</p>
+          </div>
+          <div class="note-block"><h3>Probe</h3><div class="probe" id="pProbe" aria-live="polite">Hover over the image to read intensity at a point.</div></div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- STUDY 03 -->
+  <article class="study" id="ofi" aria-labelledby="ofi-title">
+    <div class="wrap">
+      <header class="study-head">
+        <span class="study-num" aria-hidden="true">03</span>
+        <div><div class="eyebrow">Skin friction</div><h2 id="ofi-title">Wall shear from oil fringes</h2></div>
+        <div class="tags"><span class="tag">Oil-film interferometry</span><span class="tag">Flat plate</span></div>
+      </header>
+      <div class="study-body">
+        <div>
+          <div class="row" style="justify-content:space-between;margin-bottom:10px">
+            <div class="seg" role="group" aria-label="Probe presets" id="oPreset"><button data-p="lower" aria-pressed="true">Lower drop</button><button data-p="upper" aria-pressed="false">Upper drop</button></div>
+            <span class="muted" style="font-size:13.5px">Drag the gold line or its ends. Click anywhere to move it.</span>
+          </div>
+          <div class="stage ofi-stage black">
+            <div class="slide flush"><canvas id="ofiCanvas" width="1278" height="799" tabindex="0" aria-label="Oil film interferometry image of two oil drops on a flat plate with a movable probe line. Arrow keys move the line."></canvas></div>
+          </div>
+          <div class="panel-card">
+            <div class="lab" style="margin-bottom:8px">Intensity along the gold line</div>
+            <canvas id="ofiProfile" width="900" height="300" aria-label="Intensity profile along the probe line"></canvas>
+          </div>
+        </div>
+        <aside class="notes">
+          <div class="note-block" style="border-top:0;padding-top:0">
+            <h3>Dominant fringe spacing Δx</h3>
+            <div class="big-num" id="ofiSpacing">–<small>px</small></div>
+            <p class="muted" style="font-size:14px" id="ofiDetail">Measured with a windowed Fourier transform of the profile.</p>
+          </div>
+          <div class="note-block">
+            <h3>How it works</h3>
+            <ol class="steps">
+              <li>Drops of silicone oil are placed on the flat plate before the run.</li>
+              <li>Air shear spreads each drop into a thin wedge that thins with time.</li>
+              <li>Under monochromatic light the wedge shows interference fringes. Wider spacing means higher shear.</li>
+            </ol>
+          </div>
+          <div class="formula" aria-label="tau w equals 2 n cos theta r times mu delta x over lambda t">τ<sub>w</sub> = 2 n cosθ<sub>r</sub> · μ Δx / (λ t)</div>
+          <p class="muted" style="font-size:13.5px">μ and n: oil viscosity and refractive index · λ: light wavelength · t: run time. Spacing here is in image pixels; multiply by the camera scale for metres.</p>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- STUDY 04 -->
+  <article class="study" id="owl" aria-labelledby="owl-title">
+    <div class="wrap">
+      <header class="study-head">
+        <span class="study-num" aria-hidden="true">04</span>
+        <div><div class="eyebrow">Biological flight</div><h2 id="owl-title">Barn owl feather aerodynamics</h2></div>
+        <div class="tags"><span class="tag">2D PIV</span><span class="tag">Load cell</span><span class="tag">NASA EPSCoR</span></div>
+      </header>
+      <div class="study-body">
+        <div>
+          <div class="stage gallery">
+            <div class="slide" data-thumb="assets/img/feather-piv-alpha40.webp" data-label="Flow at 40°" data-cap="Feather P10 at α = 40°, 4 m/s. Color shows velocity magnitude over freestream speed, V/U∞. The dark blue region behind the feather is its low-speed wake." style="background:#fff">
+              <img src="assets/img/feather-piv-alpha40.webp" alt="Contour map of velocity magnitude normalized by freestream speed around feather P10 at 40 degrees angle of attack and 4 metres per second" width="1335" height="1313">
+            </div>
+            <div class="slide" hidden data-thumb="assets/img/feather-velocity-vectors.webp" data-label="Velocity vectors" data-cap="Velocity vectors near the feather. Color shows velocity normalized by the freestream speed." style="background:#fff">
+              <img src="assets/img/feather-velocity-vectors.webp" alt="Velocity vectors near the feather with color showing velocity normalized by the freestream speed" width="1600" height="1600" loading="lazy">
+            </div>
+            <div class="slide" hidden data-thumb="assets/img/feather-balance-assembly.webp" data-label="Force-balance mount" data-cap="CAD assembly: the feather clamp sits on a load cell above a rotary base.">
+              <img src="assets/img/feather-balance-assembly.webp" alt="CAD rendering of a barn owl feather clamped on top of a load cell and rotary base" width="400" height="600" loading="lazy">
+            </div>
+            <div class="slide flush" hidden data-thumb="assets/img/feather-markers.webp" data-dark="1" data-label="Feather in the tunnel" data-cap="A mounted flight feather with markers along its surface for tracking how it bends." style="background:#000">
+              <img src="assets/img/feather-markers.webp" alt="A mounted flight feather with markers along its surface, lit against a dark background" width="1400" height="875" loading="lazy">
+            </div>
+            <div class="slide flush" hidden data-thumb="assets/img/barn-owl-wing.webp" data-dark="1" data-label="The wing" data-cap="Barn owl wing photographed with rulers for scale." style="background:#000">
+              <img src="assets/img/barn-owl-wing.webp" alt="Barn owl wing photographed with rulers for scale" width="1400" height="1050" loading="lazy">
+            </div>
+          </div>
+          <p class="stage-cap muted" style="font-size:13.5px;margin-top:10px"></p>
+          <div class="thumbs" role="tablist" aria-label="Study 04 figures"></div>
+        </div>
+        <aside class="notes">
+          <p>How does air flow over a flexible flight feather? The team mounts barn owl primary feathers on a load cell, then compares them with a 3D-printed wing model using PIV and force measurements. The goal is quieter rotor design.</p>
+          <div class="note-block"><h3>Measured</h3><ul class="legend">
+            <li><span class="sw" style="background:var(--gold)"></span><span>Velocity field around the feather with 2D PIV</span></li>
+            <li><span class="sw" style="background:var(--gold)"></span><span>Lift, drag and moments with a load cell across angles of attack</span></li>
+            <li><span class="sw" style="background:var(--gold)"></span><span>Feather bending from surface markers</span></li></ul></div>
+          <div class="note-block"><h3>Support</h3><p class="muted" style="font-size:14.5px">Idaho NASA EPSCoR</p></div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <!-- STUDY 05 -->
+  <article class="study" id="flag" aria-labelledby="flag-title" style="padding-bottom:clamp(64px,8vw,104px)">
+    <div class="wrap">
+      <header class="study-head">
+        <span class="study-num" aria-hidden="true">05</span>
+        <div><div class="eyebrow">Fluid–structure interaction</div><h2 id="flag-title">A flag that flaps on its own</h2></div>
+        <div class="tags"><span class="tag">Shape tracking</span><span class="tag">Modal analysis</span><span class="tag">PIV</span></div>
+      </header>
+      <div class="study-body">
+        <div>
+          <div class="stage gallery">
+            <div class="slide pair" data-thumb="assets/img/flag-overlay-poster.jpg" data-label="Motion &amp; modes" data-cap="Run 0669. Left: tracked flag shapes over the recorded images. Right: the same motion rebuilt from modes 1–4; red arrows show where it differs from the measured shape.">
+              <video src="assets/video/flag-run0669-overlay.mp4" poster="assets/img/flag-overlay-poster.jpg" muted playsinline loop controls preload="metadata" data-autoplay aria-label="Run 0669: recorded flag images with tracked shapes overlaid"></video>
+              <video src="assets/video/flag-run0669-modes-1-4.mp4" poster="assets/img/flag-modes-poster.jpg" muted playsinline loop controls preload="metadata" data-autoplay aria-label="Run 0669: flag shape and its reconstruction from modes 1 to 4"></video>
+            </div>
+          </div>
+          <p class="stage-cap muted" style="font-size:13.5px;margin-top:10px"></p>
+          <div class="thumbs" role="tablist" aria-label="Study 05 figures"></div>
+        </div>
+        <aside class="notes">
+          <p>A flexible flag held at its leading edge flutters in the airstream. We track its shape through each cycle, break the motion into a few dominant modes, and use PIV to follow the vortices it sheds.</p>
+          <div class="note-block"><h3>Coordinates</h3><p class="muted" style="font-size:14.5px">X* and Y* are positions scaled by the flag length, so runs with different flags compare directly.</p></div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- PEOPLE -->
+<section class="band" id="people" aria-labelledby="people-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Students &amp; outreach</div>
+      <h2 id="people-title">Hands on the tunnel</h2>
+      <p class="muted lede">Graduate and undergraduate students run the experiments, from setting fan speed to aligning lasers. Visiting groups see the tunnel in action.</p>
+    </div>
+    <div class="people">
+      <figure><img src="assets/img/students-operating-tunnel.webp" alt="Two students at the wind tunnel control panel, one adjusting a setting while the other holds the test plan" width="1600" height="1234" loading="lazy" style="object-position:60% 40%"><figcaption>Students set up a run at the tunnel control panel.</figcaption></figure>
+      <figure><img src="assets/img/high-school-visit-03-group.webp" alt="High school students gathered along the wind tunnel listening to Dr. Durgesh explain the test section" width="1400" height="1007" loading="lazy" style="object-position:50% 60%"><figcaption>High school students tour the facility.</figcaption></figure>
+      <figure><img src="assets/img/students-operating-bw.webp" alt="Black and white photo of two students working at the wind tunnel" width="1600" height="1067" loading="lazy" style="object-position:55% 40%"><figcaption>Checking the test section before a run.</figcaption></figure>
+    </div>
+
+    <div class="labs-head">
+      <div><div class="eyebrow">Classroom labs</div><h3>Testing models on the sting balance</h3></div>
+      <p class="muted">The same sting balance carries spheres for the drag lab and scale models through a pitch sweep. Students read lift, drag and pitching moment, then compare their numbers with theory on the whiteboard behind the test section.</p>
+    </div>
+    <div class="labs">
+      <figure><div class="lab-frame"><img src="assets/img/sphere-drag-4x3.webp" alt="A sphere on a sting balance in the test section, with arrows labeling the balance, the model and the flow direction" width="700" height="525" loading="lazy"></div><figcaption><b>Drag on smooth and rough spheres.</b> Five fan settings per ball; students plot drag coefficient against Reynolds number.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/model-sting-level.webp" alt="A dark scale model mounted level on the silver sting balance inside the transparent test section" width="1400" height="1050" loading="lazy"></div><figcaption><b>Level.</b> The scale model on the sting balance at zero pitch.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/model-sting-pitched.webp" alt="The same scale model pitched nose-up on the sting balance, with the pitch gearbox visible below" width="1400" height="1050" loading="lazy"></div><figcaption><b>Pitched up.</b> A gearbox under the floor tilts the sting through the angle sweep.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/model-sting-closeup.webp" alt="Close-up of the pitched scale model and sting balance in front of a whiteboard with Bernoulli equations" width="1400" height="1050" loading="lazy"></div><figcaption><b>Close-up.</b> Bernoulli and ideal-gas notes from the lab on the board behind.</figcaption></figure>
+    </div>
+
+    <div class="outreach">
+      <div class="eyebrow">Outreach</div>
+      <p>High school groups and campus visitors watch the tunnel run and see a live measurement. <a href="#contact">Contact the director</a> to schedule a visit.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FACILITY -->
+<section class="band dark" id="facility" aria-labelledby="fac-title">
+  <div class="wrap facility">
+    <figure>
+      <img src="assets/img/tunnel-labeled.webp" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1800" height="1273" loading="lazy">
+      <figcaption>Air enters at the inlet, speeds up through the effuser into the test section, then slows in the diffuser. A variable frequency drive (VFD) sets fan speed.</figcaption>
+    </figure>
+    <div>
+      <div class="eyebrow">The facility</div>
+      <h2 id="fac-title" style="margin:12px 0 16px">The test section</h2>
+      <p class="muted">A variable-speed fan draws air through a 6.25:1 contraction into a transparent test section with optical access for laser diagnostics.</p>
+      <table class="spec-table">
+        <tr><th scope="row">Test section</th><td>18 × 18 × 36 in<br><span class="muted">45.7 × 45.7 × 91.4 cm (W × H × L)</span></td></tr>
+        <tr><th scope="row">Speed range</th><td>Below 3.1 m/s to above 67.1 m/s<br><span class="muted">&lt;10 ft/s to &gt;220 ft/s, open-ended bounds per manufacturer</span></td></tr>
+        <tr><th scope="row">Layout</th><td>Open circuit, variable-speed fan</td></tr>
+        <tr><th scope="row">Contraction</th><td>6.25 : 1</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUMENTS -->
+<section class="band" id="instruments" aria-labelledby="inst-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Measurement systems</div>
+      <h2 id="inst-title">Instrumentation</h2>
+    </div>
+    <div class="inst">
+      <section aria-labelledby="i1"><h3 id="i1">Force, pressure &amp; airspeed</h3><ul>
+        <li><b>ATI Mini and Gamma load cells</b><span>Forces and moments on mounted models.</span></li>
+        <li><b>Validyne DP45 pressure transducers</b><span>Small differential pressures.</span></li>
+        <li><b>Pressure calibrator and Dwyer 1430 Microtector</b><span>Pressure reference and liquid-column height readout.</span></li>
+        <li><b>TSI IFA-100 hot-wire anemometer</b><span>Constant-temperature operation resolves local velocity fluctuations.</span></li>
+      </ul></section>
+      <section aria-labelledby="i2"><h3 id="i2">Flow imaging &amp; lasers</h3><ul>
+        <li><b>LaVision 2D PIV</b><span>200 mJ pulsed Nd:YAG laser; DaVis turns particle image pairs into two-component velocity fields.</span></li>
+        <li><b>JAI Spark SP-5000-PMCL</b><span>Global-shutter camera, 2560 × 2048 px at up to 137 frames/s.</span></li>
+        <li><b>Basler ace 2 a2A1920-51gcPRO</b><span>2.3 MP color GigE camera at up to 51 frames/s.</span></li>
+        <li><b>Frame grabber</b><span>Moves camera frames to the acquisition computer.</span></li>
+      </ul></section>
+      <section aria-labelledby="i3"><h3 id="i3">Acquisition &amp; signals</h3><ul>
+        <li><b>National Instruments DAQ</b><span>Two 16-channel PCIe boards, a simultaneous-sampling system and a BNC-2110 block for sensors and triggers.</span></li>
+        <li><b>Krohn-Hite 3362 analog filter</b><span>Two four-pole channels, 0.1 Hz to 200 kHz.</span></li>
+        <li><b>TMX high-frequency recorder</b><span>Touchscreen display, recording and review of waveforms.</span></li>
+        <li><b>Computing</b><span>Three 64 GB / 4 TB workstations plus acquisition PCs and an oscilloscope for timing checks.</span></li>
+      </ul></section>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="band dark" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact">
+    <img class="portrait" src="assets/img/director-headshot.webp" alt="Portrait of Dr. Vibhav Durgesh" width="640" height="640" loading="lazy">
+    <div>
+      <div class="eyebrow">Facility director</div>
+      <h2 id="contact-title" style="margin:12px 0 14px">Dr. Vibhav Durgesh</h2>
+      <p class="muted">Associate Professor of Mechanical Engineering. Dr. Durgesh studies low-Reynolds-number aerodynamics with wind and water tunnel experiments. Get in touch about research collaborations, student projects or lab demonstrations.</p>
+    </div>
+    <div class="contact-card">
+      <span class="eyebrow">Email</span>
+      <p class="mail" aria-label="Email: vdurgesh at uidaho dot edu">vdurgesh <span>at</span> uidaho <span>dot</span> edu</p>
+      <span class="eyebrow" style="margin-top:8px">Profiles</span>
+      <div class="links">
+        <a class="btn btn-solid" href="https://www.uidaho.edu/people/vdurgesh" rel="noopener">Faculty profile ↗</a>
+        <a class="btn btn-ghost" href="https://scholar.google.com/citations?user=RkXIN38AAAAJ&amp;hl=en" rel="noopener">Google Scholar ↗</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/vibhavdurgesh/" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><span>University of Idaho · College of Engineering · Department of Mechanical Engineering</span><span>Wind Tunnel Laboratory · Moscow, Idaho</span></div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Enlarged figure">
+  <button class="close" id="lbClose" aria-label="Close">×</button>
+  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCap"></figcaption></figure>
+</dialog>
+
+<script src="assets/data/plif-frames.js" defer></script>
+<script src="assets/data/ofi-image.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const head = document.querySelector('.site-head');
+new ResizeObserver(() => { const sticky = getComputedStyle(head).position === 'sticky'; document.documentElement.style.setProperty('--sticky-top', sticky ? head.offsetHeight + 'px' : '0px'); }).observe(head);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+function pressSeg(group, btn){ group.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', b===btn ? 'true':'false')); }
+
+/* ---------- Autoplay visible videos ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { const v = e.target;
+    if (e.isIntersecting && !v.closest('.slide[hidden]')) { if (!reduceMotion && !v.dataset.userPaused) v.play().catch(()=>{}); }
+    else if (!v.paused) v.pause(); });
+}, {threshold:.35});
+document.querySelectorAll('video[data-autoplay]').forEach(v => io.observe(v));
+
+/* ---------- Lightbox ---------- */
+const lb = $('lightbox');
+function openLightbox(img, cap){ $('lbImg').src = img.currentSrc || img.src; $('lbImg').alt = img.alt; $('lbCap').textContent = cap || ''; try { lb.showModal(); } catch(e) { lb.setAttribute('open',''); } }
+$('lbClose').addEventListener('click', () => lb.close());
+lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+
+/* ---------- Study galleries: same 16:10 frame, thumbnails switch the figure ---------- */
+document.querySelectorAll('.stage.gallery').forEach(stage => {
+  const col = stage.parentElement, slides = [...stage.querySelectorAll('.slide')];
+  const capEl = col.querySelector('.stage-cap'), thumbs = col.querySelector('.thumbs'), controls = col.querySelector('.controls');
+  const expand = document.createElement('button'); expand.className='expand'; expand.type='button'; expand.setAttribute('aria-label','Enlarge figure'); expand.textContent='⤢'; stage.appendChild(expand);
+  let cur = 0;
+  if (slides.length < 2) thumbs.hidden = true;
+  slides.forEach((s,i) => {
+    const b = document.createElement('button'); b.type='button'; b.setAttribute('role','tab'); b.setAttribute('aria-label', s.dataset.label || ('Figure '+(i+1)));
+    b.title = s.dataset.label || ''; if (s.dataset.dark) b.classList.add('dark-thumb');
+    b.innerHTML = `<img src="${s.dataset.thumb}" alt="">`; b.addEventListener('click', () => show(i)); thumbs.appendChild(b);
+  });
+  thumbs.addEventListener('keydown', e => { if (e.key!=='ArrowRight' && e.key!=='ArrowLeft') return; e.preventDefault(); const j=(cur+(e.key==='ArrowRight'?1:-1)+slides.length)%slides.length; show(j); thumbs.children[j].focus(); });
+  function show(i){
+    slides[cur].querySelectorAll('video').forEach(v=>v.pause());
+    cur = i; slides.forEach((s,j)=>s.hidden = j!==i);
+    [...thumbs.children].forEach((b,j)=>{ b.setAttribute('aria-selected', j===i?'true':'false'); b.tabIndex = j===i?0:-1; });
+    capEl.textContent = slides[i].dataset.cap || '';
+    const img = slides[i].querySelector(':scope > img'); expand.hidden = !img;
+    if (controls) controls.hidden = !slides[i].querySelector('video#gustVideo');
+    if (!reduceMotion) slides[i].querySelectorAll('video[data-autoplay]').forEach(v=>{ if(!v.dataset.userPaused) v.play().catch(()=>{}); });
+  }
+  expand.addEventListener('click', () => { const img = slides[cur].querySelector(':scope > img'); if (img) openLightbox(img, slides[cur].dataset.cap); });
+  slides.forEach(s => { const img = s.querySelector(':scope > img'); if (img) { img.style.cursor='zoom-in'; img.addEventListener('click', () => openLightbox(img, s.dataset.cap)); } });
+  show(0);
+});
+
+/* ---------- Research sub-nav: highlight the study in view ---------- */
+(() => {
+  const links = [...document.querySelectorAll('#rnav a')];
+  const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const spy = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { links.forEach(a=>a.setAttribute('aria-current','false')); const a = map.get(e.target.id); if (a) { a.setAttribute('aria-current','true'); a.scrollIntoView({block:'nearest',inline:'nearest'}); } } }); }, {rootMargin:'-45% 0px -50% 0px'});
+  map.forEach((a,id) => { const el = $(id); if (el) spy.observe(el); });
+})();
+
+/* ---------- Gust video player ---------- */
+(() => {
+  const v = $('gustVideo'), play = $('gPlay'), scrub = $('gScrub'), time = $('gTime');
+  const dt = 1/5; let dragging = false;
+  const fmt = () => { const d = v.duration || 20.4; time.textContent = v.currentTime.toFixed(1) + ' / ' + d.toFixed(1) + ' s'; if(!dragging) scrub.value = v.currentTime; };
+  const setBtn = () => { play.textContent = v.paused ? '▶' : '❚❚'; play.setAttribute('aria-label', v.paused ? 'Play' : 'Pause'); };
+  v.addEventListener('loadedmetadata', () => { scrub.max = v.duration; fmt(); });
+  v.addEventListener('timeupdate', fmt); v.addEventListener('seeked', fmt);
+  v.addEventListener('play', setBtn); v.addEventListener('pause', setBtn);
+  const toggle = () => { if (v.paused) { delete v.dataset.userPaused; v.play().catch(()=>{}); } else { v.dataset.userPaused = '1'; v.pause(); } };
+  play.addEventListener('click', toggle); v.addEventListener('click', toggle);
+  const step = s => { v.dataset.userPaused='1'; v.pause(); v.currentTime = Math.min(Math.max(0, Math.round(v.currentTime/dt)*dt + s*dt), (v.duration||20.4) - dt/2); };
+  $('gBack').addEventListener('click', () => step(-1)); $('gFwd').addEventListener('click', () => step(1));
+  scrub.addEventListener('input', () => { dragging = true; v.currentTime = +scrub.value; });
+  scrub.addEventListener('change', () => { dragging = false; });
+  $('gSpeed').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; v.playbackRate = +b.dataset.rate; pressSeg($('gSpeed'), b); });
+  document.addEventListener('keydown', e => {
+    if (v.closest('.slide').hidden) return;
+    const r = $('gustStage').getBoundingClientRect(); const inView = r.top < innerHeight*.6 && r.bottom > innerHeight*.4;
+    if (!inView || /INPUT|BUTTON|CANVAS|SELECT/.test(document.activeElement.tagName) || lb.open) return;
+    if (e.key==='ArrowLeft'){step(-1);e.preventDefault();} else if(e.key==='ArrowRight'){step(1);e.preventDefault();} else if(e.key===' '){toggle();e.preventDefault();}
+  });
+  io.observe(v);
+})();
+
+/* ---------- Color maps ---------- */
+function ramp(stops){ const lut = new Uint8ClampedArray(256*3); const n = stops.length-1;
+  for(let i=0;i<256;i++){ const t=i/255*n, k=Math.min(n-1,Math.floor(t)), f=t-k; for(let c=0;c<3;c++) lut[i*3+c]=stops[k][c]+(stops[k+1][c]-stops[k][c])*f; } return lut; }
+const CMAPS = {
+  inferno: ramp([[0,0,4],[31,12,72],[85,15,109],[136,34,106],[186,54,85],[227,89,51],[249,140,10],[249,201,50],[252,255,164]]),
+  dye:     ramp([[0,0,0],[2,30,12],[10,90,35],[40,170,60],[140,230,90],[235,255,205]]),
+  viridis: ramp([[68,1,84],[72,40,120],[62,74,137],[49,104,142],[38,130,142],[31,158,137],[53,183,121],[109,205,89],[180,222,44],[253,231,37]]),
+  grey:    ramp([[0,0,0],[255,255,255]])
+};
+const TIME_LUT = ramp([[40,70,200],[30,160,220],[60,210,160],[200,225,60],[241,179,0],[240,90,40]]);
+function lutCss(lut){ const s=[]; for(let i=0;i<=8;i++){const k=Math.round(i/8*255)*3; s.push(`rgb(${lut[k]},${lut[k+1]},${lut[k+2]}) ${i*12.5}%`);} return `linear-gradient(0deg,${s.join(',')})`; }
+
+/* ---------- pLIF explorer ---------- */
+(() => {
+  const SRC = window.PLIF_FRAMES || []; const N = SRC.length; if(!N){ $('plifHud').textContent='Frames could not be loaded.'; return; }
+  const W = 480, H = 778, P = W*H, T0 = 40, THRESH = 28;
+  const cv = $('plifCanvas'), ctx = cv.getContext('2d'), img = ctx.createImageData(W,H);
+  const frames = []; let frontDepth = [];
+  let cur = 0, playing = false, mode = 'frame', cmap = 'inferno', gain = 1.6, fps = 6, last = 0, hover = null, touched = false;
+  const view = cv.parentElement, tool = view.parentElement;
+  new ResizeObserver(() => { if (getComputedStyle(tool).position === 'absolute') view.style.width = (tool.clientHeight*W/H) + 'px'; else view.style.width = ''; }).observe(tool);
+  const strip = $('filmstrip');
+  SRC.forEach((src,i)=>{ const b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Frame '+(i+1)); b.innerHTML=`<img src="${src}" alt="">`; b.addEventListener('click',()=>{touched=true;stop();show(i);}); strip.appendChild(b); });
+
+  Promise.all(SRC.map(src => new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=rej; im.src=src; }))).then(ims => {
+    const oc = document.createElement('canvas'); oc.width=W; oc.height=H; const ox = oc.getContext('2d',{willReadFrequently:true});
+    ims.forEach(im => { ox.drawImage(im,0,0,W,H); const d=ox.getImageData(0,0,W,H).data; const g=new Uint8Array(P); for(let i=0;i<P;i++) g[i]=d[i*4]; frames.push(g); });
+    const bg = new Uint8Array(P); for(let i=0;i<P;i++){ let m=255; for(let k=0;k<N;k++){ const v=frames[k][i]; if(v<m) m=v; } bg[i]=m; }
+    for(let k=0;k<N;k++){ const f=frames[k]; for(let i=0;i<P;i++){ const s=f[i]-bg[i]; f[i]= s>0? s:0; } }
+    frontDepth = frames.map(f => { for(let y=H-1;y>=0;y--){ let c=0; const o=y*W; for(let x=0;x<W;x++) if(f[o+x]>40) c++; if(c>=4) return (y+1)/H*100; } return 0; });
+    show(0);
+    if(!reduceMotion){ const ob = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting && !playing && !touched) start(); else if(!e.isIntersecting) stop(); }),{threshold:.3}); ob.observe(cv); }
+  }).catch(()=>{ $('plifHud').textContent='Frames could not be loaded.'; });
+
+  function render(){
+    if(!frames.length) return;
+    const out = img.data, lut = CMAPS[cmap];
+    if(mode==='frame'){
+      const f = frames[cur];
+      for(let i=0,j=0;i<P;i++,j+=4){ let v=f[i]*gain; v=v>255?255:v|0; out[j]=lut[v*3]; out[j+1]=lut[v*3+1]; out[j+2]=lut[v*3+2]; out[j+3]=255; }
+    } else if(mode==='trail'){
+      for(let i=0,j=0;i<P;i++,j+=4){ let m=0; for(let k=0;k<=cur;k++){ const v=frames[k][i]; if(v>m) m=v; } let v=m*gain; v=v>255?255:v|0; out[j]=lut[v*3]; out[j+1]=lut[v*3+1]; out[j+2]=lut[v*3+2]; out[j+3]=255; }
+    } else {
+      const span = Math.max(1,N-1);
+      for(let i=0,j=0;i<P;i++,j+=4){ let first=-1, m=0; for(let k=0;k<=cur;k++){ const v=frames[k][i]; if(first<0 && v>THRESH) first=k; if(v>m) m=v; }
+        if(first<0){ out[j]=out[j+1]=out[j+2]=0; } else { const c=Math.round(first/span*255)*3; let a=m*gain/200; a=a>1?1:a; out[j]=TIME_LUT[c]*a; out[j+1]=TIME_LUT[c+1]*a; out[j+2]=TIME_LUT[c+2]*a; }
+        out[j+3]=255; }
+    }
+    ctx.putImageData(img,0,0);
+    if(frontDepth.length && mode!=='arrival'){ const y=frontDepth[cur]/100*H; ctx.strokeStyle='rgba(241,179,0,.85)'; ctx.setLineDash([6,5]); ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); ctx.setLineDash([]); }
+    if(hover){ ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(hover.x-10,hover.y); ctx.lineTo(hover.x+10,hover.y); ctx.moveTo(hover.x,hover.y-10); ctx.lineTo(hover.x,hover.y+10); ctx.stroke(); }
+    $('plifHud').innerHTML = `Frame ${String(cur+1).padStart(2,'0')} / ${N}<br>t = ${T0+cur} s` + (mode==='trail'?'<br>Trail':'') + (mode==='arrival'?'<br>Arrival time':'');
+    $('plifBar').style.background = lutCss(mode==='arrival'? TIME_LUT : lut);
+    $('pFrameLab').textContent = String(cur+1).padStart(2,'0')+' / '+N;
+    $('pScrub').value = cur;
+    [...strip.children].forEach((b,i)=>b.setAttribute('aria-current', i===cur?'true':'false'));
+    const act = strip.children[cur]; if(act && playing) strip.scrollLeft = act.offsetLeft - strip.clientWidth/2 + act.clientWidth/2;
+    updateProbe(); drawChart();
+  }
+  function show(i){ cur=(i+N)%N; render(); }
+  function loop(ts){ if(!playing) return; if(ts-last >= 1000/fps){ last=ts; cur=(cur+1)%N; render(); } requestAnimationFrame(loop); }
+  function start(){ playing=true; $('pPlay').textContent='❚❚'; $('pPlay').setAttribute('aria-label','Pause'); requestAnimationFrame(loop); }
+  function stop(){ playing=false; $('pPlay').textContent='▶'; $('pPlay').setAttribute('aria-label','Play'); }
+  $('pPlay').addEventListener('click',()=>{ touched=true; playing?stop():start(); });
+  $('pBack').addEventListener('click',()=>{ touched=true; stop(); show(cur-1); });
+  $('pFwd').addEventListener('click',()=>{ touched=true; stop(); show(cur+1); });
+  $('pScrub').addEventListener('input',e=>{ touched=true; stop(); show(+e.target.value); });
+  const notes = { frame:'Each frame as recorded, background removed.', trail:'Brightest value seen at each point so far: the path the dye has swept.', arrival:'Color shows the frame in which dye first reached each point, blue early to orange late.' };
+  $('pMode').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; mode=b.dataset.mode; pressSeg($('pMode'),b); $('pModeNote').textContent=notes[mode]; if(mode!=='frame' && !playing && cur<N-1 && !touched) cur=N-1; render(); });
+  $('pCmap').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; cmap=b.dataset.cmap; pressSeg($('pCmap'),b); render(); });
+  $('pGain').addEventListener('input',e=>{ gain=+e.target.value; $('pGainVal').textContent=gain.toFixed(1)+'×'; render(); });
+  $('pFps').addEventListener('input',e=>{ fps=+e.target.value; $('pFpsVal').textContent=fps+' fps'; });
+  const toPx = e => { const r=cv.getBoundingClientRect(); return { x: Math.round((e.clientX-r.left)/r.width*W), y: Math.round((e.clientY-r.top)/r.height*H) }; };
+  cv.addEventListener('pointermove', e=>{ hover=toPx(e); if(!playing) render(); else updateProbe(); });
+  cv.addEventListener('pointerleave', ()=>{ hover=null; if(!playing) render(); $('pProbe').textContent='Hover over the image to read intensity at a point.'; });
+  function updateProbe(){
+    if(!hover || !frames.length) return; const x=Math.min(W-1,Math.max(0,hover.x)), y=Math.min(H-1,Math.max(0,hover.y)), i=y*W+x;
+    let arr='not yet'; for(let k=0;k<=cur;k++) if(frames[k][i]>THRESH){ arr='frame '+(k+1); break; }
+    $('pProbe').innerHTML = `x ${(x/W*100).toFixed(0)}% · y ${(y/H*100).toFixed(0)}%<br>signal ${frames[cur][i]} / 255 · dye arrived: ${arr}`;
+  }
+  const ch = $('pChart'), cx = ch.getContext('2d');
+  function drawChart(){
+    const w=ch.width, h=ch.height, L=56, R=16, T=18, B=40; cx.clearRect(0,0,w,h);
+    cx.font='20px "IBM Plex Mono", monospace'; cx.fillStyle='#9AA5A9'; cx.strokeStyle='#2A3034'; cx.lineWidth=1;
+    for(const v of [0,50,100]){ const y=T+(v/100)*(h-T-B); cx.beginPath(); cx.moveTo(L,y); cx.lineTo(w-R,y); cx.stroke(); cx.fillText(v+'%',4,y+7); }
+    const X=k=>L+k/(N-1)*(w-L-R), Y=v=>T+(v/100)*(h-T-B);
+    for(const k of [0,5,10,15,22]) cx.fillText(String(k+1),X(k)-6,h-10);
+    if(!frontDepth.length) return;
+    cx.beginPath(); frontDepth.forEach((v,k)=>{ k?cx.lineTo(X(k),Y(v)):cx.moveTo(X(k),Y(v)); }); cx.lineTo(X(N-1),Y(0)); cx.lineTo(X(0),Y(0)); cx.closePath(); cx.fillStyle='rgba(241,179,0,.12)'; cx.fill();
+    cx.beginPath(); frontDepth.forEach((v,k)=>{ k?cx.lineTo(X(k),Y(v)):cx.moveTo(X(k),Y(v)); }); cx.strokeStyle='#F1B300'; cx.lineWidth=3; cx.stroke();
+    cx.strokeStyle='rgba(255,255,255,.35)'; cx.lineWidth=1; cx.beginPath(); cx.moveTo(X(cur),T); cx.lineTo(X(cur),h-B); cx.stroke();
+    cx.fillStyle='#fff'; cx.beginPath(); cx.arc(X(cur),Y(frontDepth[cur]),7,0,7); cx.fill();
+    const yy=Y(frontDepth[cur]); cx.fillStyle='#E8ECEC'; cx.fillText(frontDepth[cur].toFixed(0)+'%', Math.min(X(cur)+12,w-R-60), yy-12<T+14?yy+28:yy-12);
+  }
+  ch.addEventListener('click',e=>{ const r=ch.getBoundingClientRect(); const L=56/800*r.width, R=16/800*r.width; const k=Math.round((e.clientX-r.left-L)/(r.width-L-R)*(N-1)); touched=true; stop(); show(Math.max(0,Math.min(N-1,k))); });
+})();
+
+/* ---------- OFI fringe probe ---------- */
+(() => {
+  const cv=$('ofiCanvas'), ctx=cv.getContext('2d'), W=cv.width, H=cv.height;
+  const pc=$('ofiProfile'), px=pc.getContext('2d');
+  let gray=null; const base=new Image();
+  const presets={ lower:{x0:482,x1:835,y:525}, upper:{x0:192,x1:500,y:200} };
+  let seg={...presets.lower}, drag=null;
+  base.onload=()=>{ ctx.drawImage(base,0,0,W,H); const d=ctx.getImageData(0,0,W,H).data; gray=new Float32Array(W*H); for(let i=0;i<W*H;i++) gray[i]=d[i*4]; draw(); };
+  base.src=window.OFI_IMAGE || 'assets/img/oil-film-flat-plate.webp';
+  function sample(){ const n=Math.max(8,Math.round(Math.abs(seg.x1-seg.x0))), a=Math.min(seg.x0,seg.x1), out=new Float32Array(n);
+    for(let i=0;i<n;i++){ const x=Math.round(a+i); let s=0,c=0; for(let dy=-2;dy<=2;dy++){ const y=seg.y+dy; if(y>=0&&y<H&&x>=0&&x<W){ s+=gray[y*W+x]; c++; } } out[i]=c?s/c:0; } return out; }
+  function spacing(p){ const n=p.length; if(n<24) return null;
+    const k=Math.max(8,Math.round(n/6)), d=new Float32Array(n);
+    for(let i=0;i<n;i++){ let s=0,c=0; for(let j=Math.max(0,i-k);j<=Math.min(n-1,i+k);j++){s+=p[j];c++;} d[i]=(p[i]-s/c)*(0.5-0.5*Math.cos(2*Math.PI*i/(n-1))); }
+    let best=0,bp=null,tot=0,cnt=0; const maxP=Math.min(120,n/2.2);
+    for(let per=5;per<=maxP;per+=0.1){ let re=0,im=0; const w=2*Math.PI/per; for(let i=0;i<n;i++){ re+=d[i]*Math.cos(w*i); im+=d[i]*Math.sin(w*i);} const m=re*re+im*im; tot+=m; cnt++; if(m>best){best=m;bp=per;} }
+    return bp? {per:bp, strength: best/(tot/cnt)} : null; }
+  function draw(){
+    if(!gray) return; ctx.drawImage(base,0,0,W,H);
+    const a=Math.min(seg.x0,seg.x1), b=Math.max(seg.x0,seg.x1);
+    ctx.fillStyle='rgba(241,179,0,.16)'; ctx.fillRect(a,seg.y-7,b-a,14);
+    ctx.strokeStyle='#F1B300'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(a,seg.y); ctx.lineTo(b,seg.y); ctx.stroke();
+    for(const x of [seg.x0,seg.x1]){ ctx.beginPath(); ctx.arc(x,seg.y,10,0,7); ctx.fillStyle='#F1B300'; ctx.fill(); ctx.lineWidth=2.5; ctx.strokeStyle='#16130A'; ctx.stroke(); }
+    ctx.fillStyle='rgba(14,17,19,.75)'; ctx.fillRect(14,14,170,34); ctx.fillStyle='#fff'; ctx.font='500 18px "IBM Plex Mono", monospace'; ctx.fillText('y = '+seg.y+' px',26,38);
+    const p=sample(), r=spacing(p); profile(p,r);
+    if(r && r.strength>6){ $('ofiSpacing').innerHTML=r.per.toFixed(1)+'<small>px</small>'; $('ofiDetail').textContent=`About ${(p.length/r.per).toFixed(1)} fringes across a ${p.length} px window.`; }
+    else { $('ofiSpacing').innerHTML='–<small>px</small>'; $('ofiDetail').textContent='No clear fringe pattern here. Move the line across a striped part of an oil drop.'; }
+  }
+  function profile(p,r){
+    const w=pc.width,h=pc.height,L=50,R=12,T=14,B=40; px.clearRect(0,0,w,h);
+    let mn=Infinity,mx=-Infinity; for(const v of p){ if(v<mn)mn=v; if(v>mx)mx=v; } if(mx-mn<10){ mx=mn+10; }
+    const X=i=>L+i/(p.length-1)*(w-L-R), Y=v=>T+(1-(v-mn)/(mx-mn))*(h-T-B);
+    px.font='19px "IBM Plex Mono", monospace'; px.fillStyle='#9AA5A9'; px.strokeStyle='#2A3034'; px.lineWidth=1;
+    for(const v of [mn,(mn+mx)/2,mx]){ const y=Y(v); px.beginPath(); px.moveTo(L,y); px.lineTo(w-R,y); px.stroke(); px.fillText(Math.round(v),4,y+6); }
+    const n=p.length; for(const f of [0,.5,1]){ const i=Math.round(f*(n-1)); px.fillText(i+' px', Math.min(Math.max(X(i)-20,L),w-R-70), h-10); }
+    if(r && r.strength>6){ px.fillStyle='rgba(241,179,0,.10)'; for(let x=0;x<n;x+=r.per*2){ px.fillRect(X(x),T,(w-L-R)*r.per/(n-1),h-T-B); } }
+    px.beginPath(); for(let i=0;i<n;i++){ i?px.lineTo(X(i),Y(p[i])):px.moveTo(X(i),Y(p[i])); } px.strokeStyle='#F1B300'; px.lineWidth=2.4; px.stroke();
+  }
+  const toImg=e=>{ const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width*W, y:(e.clientY-r.top)/r.height*H, s:W/r.width}; };
+  cv.addEventListener('pointerdown',e=>{ const m=toImg(e), hit=16*m.s;
+    if(Math.hypot(m.x-seg.x0,m.y-seg.y)<hit) drag={t:'x0'}; else if(Math.hypot(m.x-seg.x1,m.y-seg.y)<hit) drag={t:'x1'};
+    else if(Math.abs(m.y-seg.y)<hit && m.x>Math.min(seg.x0,seg.x1) && m.x<Math.max(seg.x0,seg.x1)) drag={t:'move',dx:m.x-seg.x0,dy:m.y-seg.y};
+    else { const len=seg.x1-seg.x0; seg.y=Math.round(Math.max(3,Math.min(H-4,m.y))); seg.x0=Math.round(Math.max(0,Math.min(W-Math.abs(len),m.x-len/2))); seg.x1=seg.x0+len; drag={t:'move',dx:m.x-seg.x0,dy:0}; clearPreset(); draw(); }
+    cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove',e=>{ const m=toImg(e), hit=16*m.s;
+    if(!drag){ const onEnd=Math.hypot(m.x-seg.x0,m.y-seg.y)<hit||Math.hypot(m.x-seg.x1,m.y-seg.y)<hit; cv.style.cursor=onEnd?'ew-resize':Math.abs(m.y-seg.y)<hit?'grab':'crosshair'; return; }
+    const cl=(v,a,b)=>Math.max(a,Math.min(b,Math.round(v)));
+    if(drag.t==='x0') seg.x0=cl(m.x,0,W-1); else if(drag.t==='x1') seg.x1=cl(m.x,0,W-1);
+    else { const len=seg.x1-seg.x0; seg.x0=cl(m.x-drag.dx,0,W-1-Math.max(0,len)); seg.x1=seg.x0+len; seg.y=cl(m.y-drag.dy,3,H-4); }
+    clearPreset(); draw(); });
+  cv.addEventListener('pointerup',()=>{ drag=null; });
+  cv.addEventListener('keydown',e=>{ const s=e.shiftKey?10:1; let used=true;
+    if(e.key==='ArrowUp') seg.y=Math.max(3,seg.y-s); else if(e.key==='ArrowDown') seg.y=Math.min(H-4,seg.y+s);
+    else if(e.key==='ArrowLeft'){ seg.x0=Math.max(0,seg.x0-s); seg.x1=Math.max(seg.x0+8,seg.x1-s);} else if(e.key==='ArrowRight'){ seg.x1=Math.min(W-1,seg.x1+s); seg.x0=Math.min(seg.x1-8,seg.x0+s);} else used=false;
+    if(used){ e.preventDefault(); clearPreset(); draw(); } });
+  function clearPreset(){ $('oPreset').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false')); }
+  $('oPreset').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; seg={...presets[b.dataset.p]}; pressSeg($('oPreset'),b); draw(); });
+})();
+});
+</script>
+</body>
+</html>
