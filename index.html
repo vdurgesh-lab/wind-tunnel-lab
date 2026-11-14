@@ -29,6 +29,9 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button{-webkit-appearance:none;appearance:none;font:inherit;color:inherit;margin:0;border-radius:0}
+input[type=range]{-webkit-appearance:auto}
 html{scroll-behavior:smooth;scroll-padding-top:120px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--text);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
@@ -58,7 +61,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .tag{font:500 12px var(--mono);padding:4px 8px;border:1px solid var(--rule-dark);color:var(--on-ink-muted);border-radius:2px}
 
 /* Header */
-.site-head{position:sticky;top:0;z-index:30;background:rgba(14,17,19,.96);backdrop-filter:blur(8px);color:var(--on-ink);border-bottom:1px solid var(--rule-dark)}
+.site-head{position:sticky;top:0;z-index:30;background:rgba(14,17,19,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--on-ink);border-bottom:1px solid var(--rule-dark)}
 .site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:var(--head-h)}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .brand b{display:block;font:600 20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase}
@@ -102,7 +105,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .rcard b{font:600 20px/1.05 var(--display);text-transform:uppercase}
 .rcard span:last-child{font-size:13px;color:var(--on-ink-muted)}
 
-.rnav{position:sticky;top:var(--sticky-top,var(--head-h));z-index:20;background:rgba(14,17,19,.96);backdrop-filter:blur(8px);border-block:1px solid var(--rule-dark)}
+.rnav{position:sticky;top:var(--sticky-top,var(--head-h));z-index:20;background:rgba(14,17,19,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-block:1px solid var(--rule-dark)}
 .rnav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .rnav a{flex:none;display:flex;gap:8px;align-items:baseline;padding:14px 14px 12px;text-decoration:none;color:var(--on-ink-muted);font:500 14px var(--body);border-bottom:2px solid transparent;white-space:nowrap}
 .rnav a i{font:500 12px var(--mono);font-style:normal;color:var(--on-ink-muted)}
@@ -120,7 +123,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 /* Every research figure sits in the same 16:10 frame and keeps its own proportions */
 .stage{position:relative;aspect-ratio:16/10;background:var(--matte);border:1px solid var(--rule-dark);border-radius:3px;overflow:hidden}
 .stage.black{background:#000}
-.slide{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);place-items:center;padding:14px}
+.slide{position:absolute;top:0;right:0;bottom:0;left:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);place-items:center;padding:14px}
 .slide[hidden]{display:none}
 .slide>img,.slide>video,.slide>canvas{width:100%;height:100%;object-fit:contain}
 .slide.flush{padding:0}
@@ -161,7 +164,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .seg button:hover:not([aria-pressed="true"]){color:var(--on-ink)}
 
 /* pLIF tool inside the 16:10 frame */
-.plif-tool{position:absolute;inset:0;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr);background:var(--ink-2)}
+.plif-tool{position:absolute;top:0;right:0;bottom:0;left:0;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr);background:var(--ink-2)}
 .plif-view{position:relative;height:100%;width:290px;background:#000}
 .plif-view canvas{width:100%;height:100%;cursor:crosshair}
 .plif-hud{position:absolute;left:8px;top:8px;font:500 11.5px/1.5 var(--mono);color:#fff;background:rgba(0,0,0,.55);padding:5px 7px;border-radius:2px;pointer-events:none;font-variant-numeric:tabular-nums}
@@ -248,6 +251,16 @@ dialog.lightbox img{max-height:80vh;width:auto;max-width:100%;margin-inline:auto
 dialog.lightbox figcaption{color:var(--muted);margin:0}
 dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38px;border-radius:2px;border:0;background:var(--gold);color:#16130A;font-size:20px;cursor:pointer}
 
+
+/* Older Safari (14 and earlier) has no aspect-ratio: keep the same frames with padding boxes */
+@supports not (aspect-ratio: 1 / 1){
+  .stage{height:0;padding-top:62.5%}
+  .people{height:min(620px,50vw)}
+  .lab-frame{position:relative;height:0;padding-top:75%}
+  .lab-frame img{position:absolute;top:0;right:0;bottom:0;left:0}
+  .rcard img{height:auto}
+  .contact .portrait{height:clamp(140px,16vw,210px)}
+}
 @media (max-width:1100px){
   .brand small{display:none}
   .brand{flex:none}
@@ -288,7 +301,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .people figure:first-child{grid-column:auto}
   .labs{grid-template-columns:1fr}
   /* pLIF stacks: the frame becomes the tool's own height */
-  .stage.tool{aspect-ratio:auto}
+  .stage.tool{aspect-ratio:auto;height:auto;padding-top:0}
   .plif-tool{position:static;grid-template-columns:1fr}
   .plif-view{height:auto!important;width:min(100%,300px)!important;aspect-ratio:480/778;margin:12px auto 0}
   .slide.pair{gap:6px;padding:6px}
@@ -331,7 +344,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
         </div>
       </div>
       <figure class="hero-figure">
-        <img src="assets/img/hero-owl-feather-laser.webp" alt="A green laser sheet illuminates a barn owl feather mounted in the transparent wind tunnel test section" width="1800" height="1249">
+        <img src="assets/img/hero-owl-feather-laser.jpg" alt="A green laser sheet illuminates a barn owl feather mounted in the transparent wind tunnel test section" width="1800" height="1249">
         <figcaption style="color:var(--on-ink-muted)">A laser sheet cuts through a barn owl flight feather during a PIV run.</figcaption>
       </figure>
     </div>
@@ -372,11 +385,11 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
         <p class="muted lede">Each study shows the raw measurement, not just the conclusion. Play the movies, step through frames and probe the images yourself.</p>
       </div>
       <nav class="rindex" aria-label="Research studies">
-        <a class="rcard" href="#gust"><img src="assets/img/thumb-gust.webp" alt="" width="800" height="600"><div><span class="n">01 · PIV + force</span><b>Airfoil–gust interaction</b><span>Vortices hitting a wing, frame by frame</span></div></a>
-        <a class="rcard" href="#plif"><img src="assets/img/thumb-plif.webp" alt="" width="800" height="600"><div><span class="n">02 · pLIF</span><b>Dye release explorer</b><span>Recolor, scrub and probe 23 frames</span></div></a>
-        <a class="rcard" href="#ofi"><img src="assets/img/thumb-ofi.webp" alt="" width="800" height="600"><div><span class="n">03 · Oil film</span><b>Skin friction on a flat plate</b><span>Measure fringe spacing live</span></div></a>
-        <a class="rcard" href="#owl"><img src="assets/img/thumb-owl.webp" alt="" width="800" height="600"><div><span class="n">04 · PIV + force</span><b>Barn owl feather</b><span>Flow and loads on a real flight feather</span></div></a>
-        <a class="rcard" href="#flag"><img src="assets/img/thumb-flag.webp" alt="" width="800" height="600"><div><span class="n">05 · Shape tracking</span><b>Flapping flag</b><span>Self-excited motion and its modes</span></div></a>
+        <a class="rcard" href="#gust"><img src="assets/img/thumb-gust.jpg" alt="" width="800" height="600"><div><span class="n">01 · PIV + force</span><b>Airfoil–gust interaction</b><span>Vortices hitting a wing, frame by frame</span></div></a>
+        <a class="rcard" href="#plif"><img src="assets/img/thumb-plif.jpg" alt="" width="800" height="600"><div><span class="n">02 · pLIF</span><b>Dye release explorer</b><span>Recolor, scrub and probe 23 frames</span></div></a>
+        <a class="rcard" href="#ofi"><img src="assets/img/thumb-ofi.jpg" alt="" width="800" height="600"><div><span class="n">03 · Oil film</span><b>Skin friction on a flat plate</b><span>Measure fringe spacing live</span></div></a>
+        <a class="rcard" href="#owl"><img src="assets/img/thumb-owl.jpg" alt="" width="800" height="600"><div><span class="n">04 · PIV + force</span><b>Barn owl feather</b><span>Flow and loads on a real flight feather</span></div></a>
+        <a class="rcard" href="#flag"><img src="assets/img/thumb-flag.jpg" alt="" width="800" height="600"><div><span class="n">05 · Shape tracking</span><b>Flapping flag</b><span>Self-excited motion and its modes</span></div></a>
       </nav>
     </div>
   </section>
@@ -402,8 +415,8 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <div class="study-body">
         <div>
           <div class="stage gallery" id="gustStage">
-            <div class="slide flush" data-thumb="assets/img/airfoil-gust-poster.webp" data-label="Movie at 12°" data-cap="Lift coefficient and vorticity field at 12° angle of attack as gust vortices pass the airfoil. 5 frames per second." style="background:#f4f4f4">
-              <video id="gustVideo" src="assets/video/airfoil-gust-interaction.mp4" poster="assets/img/airfoil-gust-poster.webp" muted playsinline loop preload="metadata" aria-label="Video: lift coefficient and PIV vorticity field as vortices pass an airfoil at 12 degrees angle of attack"></video>
+            <div class="slide flush" data-thumb="assets/img/airfoil-gust-poster.jpg" data-label="Movie at 12°" data-cap="Lift coefficient and vorticity field at 12° angle of attack as gust vortices pass the airfoil. 5 frames per second." style="background:#f4f4f4">
+              <video id="gustVideo" src="assets/video/airfoil-gust-interaction.mp4" poster="assets/img/airfoil-gust-poster.jpg" muted playsinline webkit-playsinline loop preload="metadata" aria-label="Video: lift coefficient and PIV vorticity field as vortices pass an airfoil at 12 degrees angle of attack"></video>
             </div>
           </div>
           <div class="controls" id="gustControls">
@@ -540,20 +553,20 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <div class="study-body">
         <div>
           <div class="stage gallery">
-            <div class="slide" data-thumb="assets/img/feather-piv-alpha40.webp" data-label="Flow at 40°" data-cap="Feather P10 at α = 40°, 4 m/s. Color shows velocity magnitude over freestream speed, V/U∞. The dark blue region behind the feather is its low-speed wake." style="background:#fff">
-              <img src="assets/img/feather-piv-alpha40.webp" alt="Contour map of velocity magnitude normalized by freestream speed around feather P10 at 40 degrees angle of attack and 4 metres per second" width="1335" height="1313">
+            <div class="slide" data-thumb="assets/img/feather-piv-alpha40.jpg" data-label="Flow at 40°" data-cap="Feather P10 at α = 40°, 4 m/s. Color shows velocity magnitude over freestream speed, V/U∞. The dark blue region behind the feather is its low-speed wake." style="background:#fff">
+              <img src="assets/img/feather-piv-alpha40.jpg" alt="Contour map of velocity magnitude normalized by freestream speed around feather P10 at 40 degrees angle of attack and 4 metres per second" width="1335" height="1313">
             </div>
-            <div class="slide" hidden data-thumb="assets/img/feather-velocity-vectors.webp" data-label="Velocity vectors" data-cap="Velocity vectors near the feather. Color shows velocity normalized by the freestream speed." style="background:#fff">
-              <img src="assets/img/feather-velocity-vectors.webp" alt="Velocity vectors near the feather with color showing velocity normalized by the freestream speed" width="1600" height="1600" loading="lazy">
+            <div class="slide" hidden data-thumb="assets/img/feather-velocity-vectors.jpg" data-label="Velocity vectors" data-cap="Velocity vectors near the feather. Color shows velocity normalized by the freestream speed." style="background:#fff">
+              <img src="assets/img/feather-velocity-vectors.jpg" alt="Velocity vectors near the feather with color showing velocity normalized by the freestream speed" width="1600" height="1600" loading="lazy">
             </div>
-            <div class="slide" hidden data-thumb="assets/img/feather-balance-assembly.webp" data-label="Force-balance mount" data-cap="CAD assembly: the feather clamp sits on a load cell above a rotary base.">
-              <img src="assets/img/feather-balance-assembly.webp" alt="CAD rendering of a barn owl feather clamped on top of a load cell and rotary base" width="400" height="600" loading="lazy">
+            <div class="slide" hidden data-thumb="assets/img/feather-balance-assembly.jpg" data-label="Force-balance mount" data-cap="CAD assembly: the feather clamp sits on a load cell above a rotary base.">
+              <img src="assets/img/feather-balance-assembly.jpg" alt="CAD rendering of a barn owl feather clamped on top of a load cell and rotary base" width="400" height="600" loading="lazy">
             </div>
-            <div class="slide flush" hidden data-thumb="assets/img/feather-markers.webp" data-dark="1" data-label="Feather in the tunnel" data-cap="A mounted flight feather with markers along its surface for tracking how it bends." style="background:#000">
-              <img src="assets/img/feather-markers.webp" alt="A mounted flight feather with markers along its surface, lit against a dark background" width="1400" height="875" loading="lazy">
+            <div class="slide flush" hidden data-thumb="assets/img/feather-markers.jpg" data-dark="1" data-label="Feather in the tunnel" data-cap="A mounted flight feather with markers along its surface for tracking how it bends." style="background:#000">
+              <img src="assets/img/feather-markers.jpg" alt="A mounted flight feather with markers along its surface, lit against a dark background" width="1400" height="875" loading="lazy">
             </div>
-            <div class="slide flush" hidden data-thumb="assets/img/barn-owl-wing.webp" data-dark="1" data-label="The wing" data-cap="Barn owl wing photographed with rulers for scale." style="background:#000">
-              <img src="assets/img/barn-owl-wing.webp" alt="Barn owl wing photographed with rulers for scale" width="1400" height="1050" loading="lazy">
+            <div class="slide flush" hidden data-thumb="assets/img/barn-owl-wing.jpg" data-dark="1" data-label="The wing" data-cap="Barn owl wing photographed with rulers for scale." style="background:#000">
+              <img src="assets/img/barn-owl-wing.jpg" alt="Barn owl wing photographed with rulers for scale" width="1400" height="1050" loading="lazy">
             </div>
           </div>
           <p class="stage-cap muted" style="font-size:13.5px;margin-top:10px"></p>
@@ -583,8 +596,8 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
         <div>
           <div class="stage gallery">
             <div class="slide pair" data-thumb="assets/img/flag-overlay-poster.jpg" data-label="Motion &amp; modes" data-cap="Run 0669. Left: tracked flag shapes over the recorded images. Right: the same motion rebuilt from modes 1–4; red arrows show where it differs from the measured shape.">
-              <video src="assets/video/flag-run0669-overlay.mp4" poster="assets/img/flag-overlay-poster.jpg" muted playsinline loop controls preload="metadata" data-autoplay aria-label="Run 0669: recorded flag images with tracked shapes overlaid"></video>
-              <video src="assets/video/flag-run0669-modes-1-4.mp4" poster="assets/img/flag-modes-poster.jpg" muted playsinline loop controls preload="metadata" data-autoplay aria-label="Run 0669: flag shape and its reconstruction from modes 1 to 4"></video>
+              <video src="assets/video/flag-run0669-overlay.mp4" poster="assets/img/flag-overlay-poster.jpg" muted playsinline webkit-playsinline loop controls preload="metadata" data-autoplay aria-label="Run 0669: recorded flag images with tracked shapes overlaid"></video>
+              <video src="assets/video/flag-run0669-modes-1-4.mp4" poster="assets/img/flag-modes-poster.jpg" muted playsinline webkit-playsinline loop controls preload="metadata" data-autoplay aria-label="Run 0669: flag shape and its reconstruction from modes 1 to 4"></video>
             </div>
           </div>
           <p class="stage-cap muted" style="font-size:13.5px;margin-top:10px"></p>
@@ -608,9 +621,9 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <p class="muted lede">Graduate and undergraduate students run the experiments, from setting fan speed to aligning lasers. Visiting groups see the tunnel in action.</p>
     </div>
     <div class="people">
-      <figure><img src="assets/img/students-operating-tunnel.webp" alt="Two students at the wind tunnel control panel, one adjusting a setting while the other holds the test plan" width="1600" height="1234" loading="lazy" style="object-position:60% 40%"><figcaption>Students set up a run at the tunnel control panel.</figcaption></figure>
-      <figure><img src="assets/img/high-school-visit-03-group.webp" alt="High school students gathered along the wind tunnel listening to Dr. Durgesh explain the test section" width="1400" height="1007" loading="lazy" style="object-position:50% 60%"><figcaption>High school students tour the facility.</figcaption></figure>
-      <figure><img src="assets/img/students-operating-bw.webp" alt="Black and white photo of two students working at the wind tunnel" width="1600" height="1067" loading="lazy" style="object-position:55% 40%"><figcaption>Checking the test section before a run.</figcaption></figure>
+      <figure><img src="assets/img/students-operating-tunnel.jpg" alt="Two students at the wind tunnel control panel, one adjusting a setting while the other holds the test plan" width="1600" height="1234" loading="lazy" style="object-position:60% 40%"><figcaption>Students set up a run at the tunnel control panel.</figcaption></figure>
+      <figure><img src="assets/img/high-school-visit-03-group.jpg" alt="High school students gathered along the wind tunnel listening to Dr. Durgesh explain the test section" width="1400" height="1007" loading="lazy" style="object-position:50% 60%"><figcaption>High school students tour the facility.</figcaption></figure>
+      <figure><img src="assets/img/students-operating-bw.jpg" alt="Black and white photo of two students working at the wind tunnel" width="1600" height="1067" loading="lazy" style="object-position:55% 40%"><figcaption>Checking the test section before a run.</figcaption></figure>
     </div>
 
     <div class="labs-head">
@@ -618,10 +631,10 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <p class="muted">The same sting balance carries spheres for the drag lab and scale models through a pitch sweep. Students read lift, drag and pitching moment, then compare their numbers with theory on the whiteboard behind the test section.</p>
     </div>
     <div class="labs">
-      <figure><div class="lab-frame"><img src="assets/img/sphere-drag-4x3.webp" alt="A sphere on a sting balance in the test section, with arrows labeling the balance, the model and the flow direction" width="700" height="525" loading="lazy"></div><figcaption><b>Drag on smooth and rough spheres.</b> Five fan settings per ball; students plot drag coefficient against Reynolds number.</figcaption></figure>
-      <figure><div class="lab-frame"><img src="assets/img/model-sting-level.webp" alt="A dark scale model mounted level on the silver sting balance inside the transparent test section" width="1400" height="1050" loading="lazy"></div><figcaption><b>Level.</b> The scale model on the sting balance at zero pitch.</figcaption></figure>
-      <figure><div class="lab-frame"><img src="assets/img/model-sting-pitched.webp" alt="The same scale model pitched nose-up on the sting balance, with the pitch gearbox visible below" width="1400" height="1050" loading="lazy"></div><figcaption><b>Pitched up.</b> A gearbox under the floor tilts the sting through the angle sweep.</figcaption></figure>
-      <figure><div class="lab-frame"><img src="assets/img/model-sting-closeup.webp" alt="Close-up of the pitched scale model and sting balance in front of a whiteboard with Bernoulli equations" width="1400" height="1050" loading="lazy"></div><figcaption><b>Close-up.</b> Bernoulli and ideal-gas notes from the lab on the board behind.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/sphere-drag-4x3.jpg" alt="A sphere on a sting balance in the test section, with arrows labeling the balance, the model and the flow direction" width="700" height="525" loading="lazy"></div><figcaption><b>Drag on smooth and rough spheres.</b> Five fan settings per ball; students plot drag coefficient against Reynolds number.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/model-sting-level.jpg" alt="A dark scale model mounted level on the silver sting balance inside the transparent test section" width="1400" height="1050" loading="lazy"></div><figcaption><b>Level.</b> The scale model on the sting balance at zero pitch.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/model-sting-pitched.jpg" alt="The same scale model pitched nose-up on the sting balance, with the pitch gearbox visible below" width="1400" height="1050" loading="lazy"></div><figcaption><b>Pitched up.</b> A gearbox under the floor tilts the sting through the angle sweep.</figcaption></figure>
+      <figure><div class="lab-frame"><img src="assets/img/model-sting-closeup.jpg" alt="Close-up of the pitched scale model and sting balance in front of a whiteboard with Bernoulli equations" width="1400" height="1050" loading="lazy"></div><figcaption><b>Close-up.</b> Bernoulli and ideal-gas notes from the lab on the board behind.</figcaption></figure>
     </div>
 
     <div class="outreach">
@@ -635,7 +648,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 <section class="band dark" id="facility" aria-labelledby="fac-title">
   <div class="wrap facility">
     <figure>
-      <img src="assets/img/tunnel-labeled.webp" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1800" height="1273" loading="lazy">
+      <img src="assets/img/tunnel-labeled.jpg" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1800" height="1273" loading="lazy">
       <figcaption>Air enters at the inlet, speeds up through the effuser into the test section, then slows in the diffuser. A variable frequency drive (VFD) sets fan speed.</figcaption>
     </figure>
     <div>
@@ -685,7 +698,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 <!-- CONTACT -->
 <section class="band dark" id="contact" aria-labelledby="contact-title">
   <div class="wrap contact">
-    <img class="portrait" src="assets/img/director-headshot.webp" alt="Portrait of Dr. Vibhav Durgesh" width="640" height="640" loading="lazy">
+    <img class="portrait" src="assets/img/director-headshot.jpg" alt="Portrait of Dr. Vibhav Durgesh" width="640" height="640" loading="lazy">
     <div>
       <div class="eyebrow">Facility director</div>
       <h2 id="contact-title" style="margin:12px 0 14px">Dr. Vibhav Durgesh</h2>
@@ -711,7 +724,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 
 <dialog class="lightbox" id="lightbox" aria-label="Enlarged figure">
   <button class="close" id="lbClose" aria-label="Close">×</button>
-  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
 </dialog>
 
 <script src="assets/data/plif-frames.js" defer></script>
@@ -769,7 +782,7 @@ document.querySelectorAll('.stage.gallery').forEach(stage => {
 (() => {
   const links = [...document.querySelectorAll('#rnav a')];
   const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
-  const spy = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { links.forEach(a=>a.setAttribute('aria-current','false')); const a = map.get(e.target.id); if (a) { a.setAttribute('aria-current','true'); a.scrollIntoView({block:'nearest',inline:'nearest'}); } } }); }, {rootMargin:'-45% 0px -50% 0px'});
+  const spy = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { links.forEach(a=>a.setAttribute('aria-current','false')); const a = map.get(e.target.id); if (a) { a.setAttribute('aria-current','true'); const bar = $('rnav'); const l = a.offsetLeft, rgt = l + a.offsetWidth; if (l < bar.scrollLeft || rgt > bar.scrollLeft + bar.clientWidth) bar.scrollLeft = l - 16; } } }); }, {rootMargin:'-45% 0px -50% 0px'});
   map.forEach((a,id) => { const el = $(id); if (el) spy.observe(el); });
 })();
 
@@ -903,7 +916,7 @@ function lutCss(lut){ const s=[]; for(let i=0;i<=8;i++){const k=Math.round(i/8*2
   const presets={ lower:{x0:482,x1:835,y:525}, upper:{x0:192,x1:500,y:200} };
   let seg={...presets.lower}, drag=null;
   base.onload=()=>{ ctx.drawImage(base,0,0,W,H); const d=ctx.getImageData(0,0,W,H).data; gray=new Float32Array(W*H); for(let i=0;i<W*H;i++) gray[i]=d[i*4]; draw(); };
-  base.src=window.OFI_IMAGE || 'assets/img/oil-film-flat-plate.webp';
+  base.src=window.OFI_IMAGE || 'assets/img/oil-film-flat-plate.jpg';
   function sample(){ const n=Math.max(8,Math.round(Math.abs(seg.x1-seg.x0))), a=Math.min(seg.x0,seg.x1), out=new Float32Array(n);
     for(let i=0;i<n;i++){ const x=Math.round(a+i); let s=0,c=0; for(let dy=-2;dy<=2;dy++){ const y=seg.y+dy; if(y>=0&&y<H&&x>=0&&x<W){ s+=gray[y*W+x]; c++; } } out[i]=c?s/c:0; } return out; }
   function spacing(p){ const n=p.length; if(n<24) return null;

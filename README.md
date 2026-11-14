@@ -9,7 +9,7 @@ It is a static site. It needs no build step and no server code, so it runs anywh
 
 ```
 index.html                 the whole page (layout, styles and scripts)
-assets/img/                photos, figures and thumbnails (WebP/JPEG)
+assets/img/                photos, figures and thumbnails (JPEG)
 assets/video/              research movies (H.264 MP4, web-optimized)
 assets/data/plif-frames.js 23 pLIF frames (Run 209, 40–62 s) for the interactive explorer
 assets/data/ofi-image.js   oil-film image for the fringe-spacing tool
