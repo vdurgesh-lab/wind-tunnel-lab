@@ -8,12 +8,15 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-<meta name="theme-color" content="#0E1113">
+<meta name="theme-color" content="#0E1113" id="themeColor">
 <meta property="og:title" content="Experimental Aerodynamics Research Laboratory · University of Idaho">
 <meta property="og:description" content="Wind tunnel research in unsteady aerodynamics, bio-inspired flight and fluid–structure interaction.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  (function(){ try { var t = localStorage.getItem('eal-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {} })();
+</script>
 <style>
 /* Layout idea: dark "test-section" bands hold the research data in identical 16:10 frames; light bands hold people and reading text. Gold marks anything you can act on. */
 :root{
@@ -22,6 +25,10 @@
   --gold:#F1B300; --gold-deep:#8A6400;
   --text:#15191B; --muted:#535C60;
   --on-ink:#E8ECEC; --on-ink-muted:#9AA5A9;
+  --accent-text:#F1B300;   /* gold used as text on the dark bands */
+  --accent-display:#F1B300; /* big gold numerals and headline word */
+  --bar-bg:rgba(14,17,19,.96); --chart-bg:#0B0D0F; --plot-line:#F1B300; --plot-fill:rgba(241,179,0,.12);
+  --logo-line:#9AA5A9; --logo-div:#E8ECEC; --band-scheme:dark;
   --rule:#C9CFCC; --rule-dark:#2A3034;
   --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
@@ -29,6 +36,14 @@
   --wrap:min(1240px, calc(100% - 2*clamp(16px,5vw,64px)));
   --head-h:64px;
   color-scheme:light;
+}
+/* Light theme: the dark bands turn white, gold text darkens for contrast */
+:root[data-theme="light"]{
+  --ink:#FFFFFF; --ink-2:#F3F5F3; --ink-3:#E8EBE9;
+  --on-ink:#15191B; --on-ink-muted:#535C60; --rule-dark:#D3D8D5;
+  --accent-text:#8A6400; --accent-display:#B98900;
+  --bar-bg:rgba(255,255,255,.95); --chart-bg:#FFFFFF; --plot-line:#B98900; --plot-fill:rgba(185,137,0,.12);
+  --logo-line:#7A858A; --logo-div:#15191B; --band-scheme:light;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -46,11 +61,11 @@ h3{font-size:clamp(24px,2.4vw,30px);text-transform:uppercase}
 p{margin:0}
 .wrap{width:var(--wrap);margin-inline:auto}
 .eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
-.dark .eyebrow{color:var(--gold)}
+.dark .eyebrow{color:var(--accent-text)}
 .lede{font-size:clamp(17px,1.6vw,20px);max-width:62ch}
 .muted{color:var(--muted)} .dark .muted{color:var(--on-ink-muted)}
 .band{padding-block:clamp(56px,8vw,104px)}
-.dark{background:var(--ink);color:var(--on-ink);color-scheme:dark}
+.dark{background:var(--ink);color:var(--on-ink);color-scheme:var(--band-scheme)}
 .section-head{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,44px);max-width:780px}
 figure{margin:0}
 figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
@@ -63,13 +78,19 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .tag{font:500 12px var(--mono);padding:4px 8px;border:1px solid var(--rule-dark);color:var(--on-ink-muted);border-radius:2px}
 
 /* Header */
-.site-head{position:sticky;top:0;z-index:30;background:rgba(14,17,19,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--on-ink);border-bottom:1px solid var(--rule-dark)}
+.site-head{position:sticky;top:0;z-index:30;background:var(--bar-bg);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--on-ink);border-bottom:1px solid var(--rule-dark)}
 .site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:var(--head-h)}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .brand .logo{height:30px;width:auto;flex:none;display:block}
 .brand b{display:block;font:600 20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase}
 .brand small{display:block;font:12px/1.3 var(--body);color:var(--on-ink-muted)}
-.site-nav{display:flex;gap:clamp(12px,2vw,28px);flex-wrap:wrap}
+.theme-toggle{flex:none;width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--rule-dark);border-radius:50%;background:transparent;color:var(--on-ink);cursor:pointer;margin-left:6px}
+.theme-toggle:hover{border-color:var(--gold);color:var(--accent-text)}
+.theme-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme-toggle .i-moon{display:none}
+:root[data-theme="light"] .theme-toggle .i-sun{display:none}
+:root[data-theme="light"] .theme-toggle .i-moon{display:block}
+.site-nav{margin-left:auto;display:flex;gap:clamp(12px,2vw,28px);flex-wrap:wrap}
 .site-nav a{font:500 14px var(--body);text-decoration:none;color:var(--on-ink-muted);padding:6px 0;border-bottom:2px solid transparent}
 .site-nav a:hover{color:var(--on-ink);border-color:var(--gold)}
 
@@ -78,7 +99,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:center}
 .hero h1{font-size:clamp(32px,5.4vw,78px);text-transform:uppercase;margin:16px 0 20px;line-height:.95}
 .hero h1 span{display:block}
-.hero h1 span{color:var(--gold)}
+.hero h1 span{color:var(--accent-display)}
 .hero-figure img{width:100%;max-height:420px;object-fit:cover;border-radius:3px}
 .specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule-dark);margin-top:clamp(40px,6vw,72px)}
 .specs div{padding:22px 20px 26px 0;border-right:1px solid var(--rule-dark)}
@@ -104,22 +125,22 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.rcard:hover{transform:none}}
 .rcard img{width:100%;aspect-ratio:4/3;object-fit:cover}
 .rcard div{padding:14px 14px 16px;display:grid;gap:6px;align-content:start}
-.rcard .n{font:500 12px var(--mono);color:var(--gold);letter-spacing:.1em}
+.rcard .n{font:500 12px var(--mono);color:var(--accent-text);letter-spacing:.1em}
 .rcard b{font:600 20px/1.05 var(--display);text-transform:uppercase}
 .rcard span:last-child{font-size:13px;color:var(--on-ink-muted)}
 
-.rnav{position:sticky;top:var(--sticky-top,var(--head-h));z-index:20;background:rgba(14,17,19,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-block:1px solid var(--rule-dark)}
+.rnav{position:sticky;top:var(--sticky-top,var(--head-h));z-index:20;background:var(--bar-bg);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-block:1px solid var(--rule-dark)}
 .rnav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .rnav a{flex:none;display:flex;gap:8px;align-items:baseline;padding:14px 14px 12px;text-decoration:none;color:var(--on-ink-muted);font:500 14px var(--body);border-bottom:2px solid transparent;white-space:nowrap}
 .rnav a i{font:500 12px var(--mono);font-style:normal;color:var(--on-ink-muted)}
 .rnav a:hover{color:var(--on-ink)}
 .rnav a[aria-current="true"]{color:var(--on-ink);border-color:var(--gold)}
-.rnav a[aria-current="true"] i{color:var(--gold)}
+.rnav a[aria-current="true"] i{color:var(--accent-text)}
 
 .study{padding-block:clamp(48px,6vw,80px);border-top:1px solid var(--rule-dark)}
 .study:first-of-type{border-top:0}
 .study-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,32px);align-items:end;margin-bottom:28px}
-.study-num{font:600 clamp(56px,7vw,92px)/.78 var(--display);color:var(--gold)}
+.study-num{font:600 clamp(56px,7vw,92px)/.78 var(--display);color:var(--accent-display)}
 .study-head h2{font-size:clamp(32px,3.6vw,48px);margin-top:6px}
 .study-body{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(24px,3.5vw,44px);align-items:start}
 
@@ -148,14 +169,14 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .notes p{color:var(--on-ink)}
 .legend{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:14.5px;color:var(--on-ink)}
 .legend li{display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:start}
-.legend .sw{width:14px;height:14px;margin-top:5px;border-radius:2px;display:block}
+.legend .sw{width:14px;height:14px;margin-top:5px;border-radius:2px;display:block;box-shadow:inset 0 0 0 1px var(--rule-dark)}
 .note-block{border-top:1px solid var(--rule-dark);padding-top:16px;display:grid;gap:10px}
 
 /* Video controls */
 .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px 0 0}
 .controls[hidden]{display:none}
 .icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:2px;background:transparent;border:1px solid var(--rule-dark);color:var(--on-ink);cursor:pointer;flex:none}
-.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+.icon-btn:hover{border-color:var(--gold);color:var(--accent-text)}
 .icon-btn.primary{background:var(--gold);border-color:var(--gold);color:#16130A}
 .icon-btn.primary:hover{background:#FFC72C;color:#16130A}
 .scrub{flex:1 1 200px;accent-color:var(--gold);min-width:140px}
@@ -183,7 +204,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .filmstrip button img{width:28px;height:45px;object-fit:cover}
 .filmstrip button[aria-current="true"]{border-color:var(--gold);opacity:1}
 .mode-note{font-size:13.5px;color:var(--on-ink-muted)}
-.chart-box{background:#0B0D0F;border:1px solid var(--rule-dark);border-radius:2px}
+.chart-box{background:var(--chart-bg);border:1px solid var(--rule-dark);border-radius:2px}
 .chart-box canvas{width:100%;height:150px;cursor:pointer}
 .probe{font:13px/1.6 var(--mono);color:var(--on-ink);font-variant-numeric:tabular-nums;min-height:3.2em}
 
@@ -197,7 +218,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .formula{font:15px/1.6 var(--mono);background:var(--ink-2);border-left:3px solid var(--gold);padding:12px 14px;color:var(--on-ink)}
 .steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:15px;color:var(--on-ink)}
 .steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:8px}
-.steps li::before{content:counter(s);font:600 14px/22px var(--mono);width:24px;height:24px;text-align:center;border:1px solid var(--gold);color:var(--gold);border-radius:50%}
+.steps li::before{content:counter(s);font:600 14px/22px var(--mono);width:24px;height:24px;text-align:center;border:1px solid var(--accent-text);color:var(--accent-text);border-radius:50%}
 
 /* People / teaching */
 .people{display:grid;grid-template-columns:1.7fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;aspect-ratio:2/1}
@@ -241,7 +262,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .contact h2{font-size:clamp(40px,5vw,66px)}
 .contact-card{border:1px solid var(--rule-dark);padding:18px 20px;border-radius:3px;height:var(--pic);display:flex;flex-direction:column;justify-content:space-between;gap:12px;background:var(--ink-2)}
 .contact-card .grp{display:grid;gap:8px}
-.contact-card .mail{font:500 18px var(--mono);color:var(--gold);word-break:break-word;margin:0}
+.contact-card .mail{font:500 18px var(--mono);color:var(--accent-text);word-break:break-word;margin:0}
 .contact-card .mail span{color:var(--on-ink-muted)}
 .contact-card .links{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .contact-card .links .btn{justify-content:center;padding:9px 10px;font-size:14px;white-space:nowrap}
@@ -274,6 +295,8 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .contact-card .links .btn:first-child{grid-column:auto}
 }
 @media (max-width:1100px){
+  .site-nav{order:3;flex-basis:100%;margin-left:0}
+  .theme-toggle{order:2;margin-left:auto}
   .brand small{display:none}
   .brand{flex:none}
   .site-head .wrap{gap:4px 16px;flex-wrap:wrap;height:auto;min-height:64px;padding-block:8px}
@@ -294,6 +317,9 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .labs-head{grid-template-columns:1fr}
 }
 @media (max-width:760px){
+  .site-head .wrap{position:relative}
+  .theme-toggle{position:absolute;right:0;top:10px}
+  .brand{padding-right:48px}
   :root{--head-h:0px}
   html{scroll-padding-top:56px}
   .site-head{position:relative}
@@ -330,7 +356,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Wind Tunnel Laboratory, back to top">
       <!-- Logo: NACA four-digit section with maximum camber 3.1428 % chord (22/7), 40 % chord, 12 % thick, at 6 degrees. Potential-flow streamlines from a Hess-Smith panel method (Cl = 1.13); white line: dividing streamline ending at the front stagnation point (x/c = 0.010, lower surface) and off the trailing edge by the Kutta condition. -->
-      <svg class="logo" aria-hidden="true" focusable="false" viewBox="-40 -24.9 190 67.1" fill="none"><desc>Airfoil from the NACA four-digit equations with maximum camber m = 3.1428 % chord (22/7), at 40 % chord, 12 % thick, pitched 6 degrees. Streamlines from a Hess-Smith panel-method (potential flow) solution, Cl = 1.13. White: dividing streamline ending at the front stagnation point (x/c = 0.010 on the lower surface) and leaving the trailing edge by the Kutta condition.</desc><g stroke="#9AA5A9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-39.5 4.3 L-25.3 1.9 L-14.8 -0.6 L-8.6 -2.7 L1.2 -7.4 L7.5 -9.3 L17.0 -10.6 L27.8 -10.9 L41.5 -9.9 L58.1 -7.4 L74.5 -3.9 L99.6 2.5 L109.0 4.3 L126.2 6.6 L149.5 8.8"/><path d="M-39.5 -9.8 L-22.4 -12.7 L-0.8 -17.8 L7.5 -19.4 L18.8 -20.6 L31.4 -20.8 L43.4 -20.2 L56.5 -18.7 L112.1 -9.3 L129.4 -7.1 L149.7 -5.1"/><path d="M-39.5 19.6 L-2.7 14.3 L8.7 13.7 L87.8 17.9 L149.9 23.7"/><path d="M-39.5 33.9 L-1.2 30.5 L11.4 30.0 L26.4 30.1 L81.5 32.4 L149.7 37.4"/></g><g stroke="#E8ECEC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-40.0 12.0 L-24.2 9.6 L-12.1 7.0 L-3.7 4.3 L-0.8 2.8 L0.9 1.5"/><path d="M99.5 10.5 L120.0 13.4 L149.9 16.2"/></g><path d="M99.5 10.5 L41.7 7.0 L16.1 5.1 L8.6 4.1 L4.0 3.0 L1.1 1.6 L0.2 0.7 L0.0 -0.0 L0.3 -1.0 L0.9 -1.7 L3.0 -3.0 L6.3 -4.2 L10.8 -5.1 L16.2 -5.8 L22.6 -6.0 L29.6 -5.8 L35.2 -5.4 L42.9 -4.4 L50.7 -3.1 L66.0 0.3 L82.6 4.8 L99.5 10.5 Z" fill="#F1B300"/></svg>
+      <svg class="logo" aria-hidden="true" focusable="false" viewBox="-40 -24.9 190 67.1" fill="none"><desc>Airfoil from the NACA four-digit equations with maximum camber m = 3.1428 % chord (22/7), at 40 % chord, 12 % thick, pitched 6 degrees. Streamlines from a Hess-Smith panel-method (potential flow) solution, Cl = 1.13. White: dividing streamline ending at the front stagnation point (x/c = 0.010 on the lower surface) and leaving the trailing edge by the Kutta condition.</desc><g stroke="var(--logo-line)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-39.5 4.3 L-25.3 1.9 L-14.8 -0.6 L-8.6 -2.7 L1.2 -7.4 L7.5 -9.3 L17.0 -10.6 L27.8 -10.9 L41.5 -9.9 L58.1 -7.4 L74.5 -3.9 L99.6 2.5 L109.0 4.3 L126.2 6.6 L149.5 8.8"/><path d="M-39.5 -9.8 L-22.4 -12.7 L-0.8 -17.8 L7.5 -19.4 L18.8 -20.6 L31.4 -20.8 L43.4 -20.2 L56.5 -18.7 L112.1 -9.3 L129.4 -7.1 L149.7 -5.1"/><path d="M-39.5 19.6 L-2.7 14.3 L8.7 13.7 L87.8 17.9 L149.9 23.7"/><path d="M-39.5 33.9 L-1.2 30.5 L11.4 30.0 L26.4 30.1 L81.5 32.4 L149.7 37.4"/></g><g stroke="var(--logo-div)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-40.0 12.0 L-24.2 9.6 L-12.1 7.0 L-3.7 4.3 L-0.8 2.8 L0.9 1.5"/><path d="M99.5 10.5 L120.0 13.4 L149.9 16.2"/></g><path d="M99.5 10.5 L41.7 7.0 L16.1 5.1 L8.6 4.1 L4.0 3.0 L1.1 1.6 L0.2 0.7 L0.0 -0.0 L0.3 -1.0 L0.9 -1.7 L3.0 -3.0 L6.3 -4.2 L10.8 -5.1 L16.2 -5.8 L22.6 -6.0 L29.6 -5.8 L35.2 -5.4 L42.9 -4.4 L50.7 -3.1 L66.0 0.3 L82.6 4.8 L99.5 10.5 Z" fill="#F1B300"/></svg>
       <span><b>Wind Tunnel Laboratory</b><small>University of Idaho · Mechanical Engineering</small></span>
     </a>
     <nav class="site-nav" aria-label="Main">
@@ -342,6 +368,10 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <a href="#instruments">Instruments</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Switch to light theme">
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6z"/></svg>
+    </button>
   </div>
 </header>
 
@@ -755,6 +785,22 @@ const head = document.querySelector('.site-head');
 new ResizeObserver(() => { const sticky = getComputedStyle(head).position === 'sticky'; document.documentElement.style.setProperty('--sticky-top', sticky ? head.offsetHeight + 'px' : '0px'); }).observe(head);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = id => document.getElementById(id);
+/* ---------- Theme ---------- */
+const onTheme = [];
+function themeColors(){ const cs = getComputedStyle(document.documentElement); const g = n => cs.getPropertyValue(n).trim();
+  return { muted:g('--on-ink-muted'), rule:g('--rule-dark'), text:g('--on-ink'), line:g('--plot-line'), fill:g('--plot-fill') }; }
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  const next = t === 'light' ? 'dark' : 'light', btn = $('themeToggle');
+  btn.setAttribute('aria-label', 'Switch to ' + next + ' theme'); btn.title = 'Switch to ' + next + ' theme';
+  $('themeColor').setAttribute('content', t === 'light' ? '#FFFFFF' : '#0E1113');
+  onTheme.forEach(f => { try { f(); } catch (e) {} });
+}
+$('themeToggle').addEventListener('click', () => {
+  const t = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  applyTheme(t); try { localStorage.setItem('eal-theme', t); } catch (e) {}
+});
+applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
 function pressSeg(group, btn){ group.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', b===btn ? 'true':'false')); }
 
 /* ---------- Autoplay visible videos ---------- */
@@ -914,17 +960,18 @@ function lutCss(lut){ const s=[]; for(let i=0;i<=8;i++){const k=Math.round(i/8*2
   const ch = $('pChart'), cx = ch.getContext('2d');
   function drawChart(){
     const w=ch.width, h=ch.height, L=56, R=16, T=18, B=40; cx.clearRect(0,0,w,h);
-    cx.font='20px "IBM Plex Mono", monospace'; cx.fillStyle='#9AA5A9'; cx.strokeStyle='#2A3034'; cx.lineWidth=1;
+    const tc=themeColors(); cx.font='20px "IBM Plex Mono", monospace'; cx.fillStyle=tc.muted; cx.strokeStyle=tc.rule; cx.lineWidth=1;
     for(const v of [0,50,100]){ const y=T+(v/100)*(h-T-B); cx.beginPath(); cx.moveTo(L,y); cx.lineTo(w-R,y); cx.stroke(); cx.fillText(v+'%',4,y+7); }
     const X=k=>L+k/(N-1)*(w-L-R), Y=v=>T+(v/100)*(h-T-B);
     for(const k of [0,5,10,15,22]) cx.fillText(String(k+1),X(k)-6,h-10);
     if(!frontDepth.length) return;
-    cx.beginPath(); frontDepth.forEach((v,k)=>{ k?cx.lineTo(X(k),Y(v)):cx.moveTo(X(k),Y(v)); }); cx.lineTo(X(N-1),Y(0)); cx.lineTo(X(0),Y(0)); cx.closePath(); cx.fillStyle='rgba(241,179,0,.12)'; cx.fill();
-    cx.beginPath(); frontDepth.forEach((v,k)=>{ k?cx.lineTo(X(k),Y(v)):cx.moveTo(X(k),Y(v)); }); cx.strokeStyle='#F1B300'; cx.lineWidth=3; cx.stroke();
-    cx.strokeStyle='rgba(255,255,255,.35)'; cx.lineWidth=1; cx.beginPath(); cx.moveTo(X(cur),T); cx.lineTo(X(cur),h-B); cx.stroke();
-    cx.fillStyle='#fff'; cx.beginPath(); cx.arc(X(cur),Y(frontDepth[cur]),7,0,7); cx.fill();
-    const yy=Y(frontDepth[cur]); cx.fillStyle='#E8ECEC'; cx.fillText(frontDepth[cur].toFixed(0)+'%', Math.min(X(cur)+12,w-R-60), yy-12<T+14?yy+28:yy-12);
+    cx.beginPath(); frontDepth.forEach((v,k)=>{ k?cx.lineTo(X(k),Y(v)):cx.moveTo(X(k),Y(v)); }); cx.lineTo(X(N-1),Y(0)); cx.lineTo(X(0),Y(0)); cx.closePath(); cx.fillStyle=tc.fill; cx.fill();
+    cx.beginPath(); frontDepth.forEach((v,k)=>{ k?cx.lineTo(X(k),Y(v)):cx.moveTo(X(k),Y(v)); }); cx.strokeStyle=tc.line; cx.lineWidth=3; cx.stroke();
+    cx.strokeStyle=tc.muted; cx.lineWidth=1; cx.beginPath(); cx.moveTo(X(cur),T); cx.lineTo(X(cur),h-B); cx.stroke();
+    cx.fillStyle=tc.text; cx.beginPath(); cx.arc(X(cur),Y(frontDepth[cur]),7,0,7); cx.fill();
+    const yy=Y(frontDepth[cur]); cx.fillStyle=tc.text; cx.fillText(frontDepth[cur].toFixed(0)+'%', Math.min(X(cur)+12,w-R-60), yy-12<T+14?yy+28:yy-12);
   }
+  onTheme.push(() => drawChart());
   ch.addEventListener('click',e=>{ const r=ch.getBoundingClientRect(); const L=56/800*r.width, R=16/800*r.width; const k=Math.round((e.clientX-r.left-L)/(r.width-L-R)*(N-1)); touched=true; stop(); show(Math.max(0,Math.min(N-1,k))); });
 })();
 
@@ -960,11 +1007,11 @@ function lutCss(lut){ const s=[]; for(let i=0;i<=8;i++){const k=Math.round(i/8*2
     const w=pc.width,h=pc.height,L=50,R=12,T=14,B=40; px.clearRect(0,0,w,h);
     let mn=Infinity,mx=-Infinity; for(const v of p){ if(v<mn)mn=v; if(v>mx)mx=v; } if(mx-mn<10){ mx=mn+10; }
     const X=i=>L+i/(p.length-1)*(w-L-R), Y=v=>T+(1-(v-mn)/(mx-mn))*(h-T-B);
-    px.font='19px "IBM Plex Mono", monospace'; px.fillStyle='#9AA5A9'; px.strokeStyle='#2A3034'; px.lineWidth=1;
+    const tc=themeColors(); px.font='19px "IBM Plex Mono", monospace'; px.fillStyle=tc.muted; px.strokeStyle=tc.rule; px.lineWidth=1;
     for(const v of [mn,(mn+mx)/2,mx]){ const y=Y(v); px.beginPath(); px.moveTo(L,y); px.lineTo(w-R,y); px.stroke(); px.fillText(Math.round(v),4,y+6); }
     const n=p.length; for(const f of [0,.5,1]){ const i=Math.round(f*(n-1)); px.fillText(i+' px', Math.min(Math.max(X(i)-20,L),w-R-70), h-10); }
-    if(r && r.strength>6){ px.fillStyle='rgba(241,179,0,.10)'; for(let x=0;x<n;x+=r.per*2){ px.fillRect(X(x),T,(w-L-R)*r.per/(n-1),h-T-B); } }
-    px.beginPath(); for(let i=0;i<n;i++){ i?px.lineTo(X(i),Y(p[i])):px.moveTo(X(i),Y(p[i])); } px.strokeStyle='#F1B300'; px.lineWidth=2.4; px.stroke();
+    if(r && r.strength>6){ px.fillStyle=tc.fill; for(let x=0;x<n;x+=r.per*2){ px.fillRect(X(x),T,(w-L-R)*r.per/(n-1),h-T-B); } }
+    px.beginPath(); for(let i=0;i<n;i++){ i?px.lineTo(X(i),Y(p[i])):px.moveTo(X(i),Y(p[i])); } px.strokeStyle=tc.line; px.lineWidth=2.4; px.stroke();
   }
   const toImg=e=>{ const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width*W, y:(e.clientY-r.top)/r.height*H, s:W/r.width}; };
   cv.addEventListener('pointerdown',e=>{ const m=toImg(e), hit=16*m.s;
@@ -983,6 +1030,7 @@ function lutCss(lut){ const s=[]; for(let i=0;i<=8;i++){const k=Math.round(i/8*2
     if(e.key==='ArrowUp') seg.y=Math.max(3,seg.y-s); else if(e.key==='ArrowDown') seg.y=Math.min(H-4,seg.y+s);
     else if(e.key==='ArrowLeft'){ seg.x0=Math.max(0,seg.x0-s); seg.x1=Math.max(seg.x0+8,seg.x1-s);} else if(e.key==='ArrowRight'){ seg.x1=Math.min(W-1,seg.x1+s); seg.x0=Math.min(seg.x1-8,seg.x0+s);} else used=false;
     if(used){ e.preventDefault(); clearPreset(); draw(); } });
+  onTheme.push(() => draw());
   function clearPreset(){ $('oPreset').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false')); }
   $('oPreset').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; seg={...presets[b.dataset.p]}; pressSeg($('oPreset'),b); draw(); });
 })();

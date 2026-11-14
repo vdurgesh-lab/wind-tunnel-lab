@@ -49,6 +49,7 @@ Open `index.html` in a browser. Everything works when opened from disk, includin
 
 - Text, links and captions are in `index.html`. Search for the section ids: `capabilities`, `research`, `gust`, `plif`, `ofi`, `owl`, `flag`, `people`, `facility`, `instruments`, `contact`.
 - To replace an image, keep the same file name in `assets/img/`, or update the `src` in `index.html`.
+- Light and dark themes: the sun/moon button in the header switches between them. Dark is the default; each visitor's choice is remembered in their browser. All theme colors are CSS variables at the top of `index.html` (`:root` for dark, `:root[data-theme="light"]` for light).
 - Research figures sit in fixed 16:10 frames and keep their own proportions, so any figure size works.
 
 All files are well under GitHub's 100 MB per-file limit. The largest is the airfoil–gust movie at about 4.5 MB.
