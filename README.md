@@ -43,8 +43,7 @@ Open `index.html` in a browser. Everything works when opened from disk, includin
 
 - **Airfoil:** NACA four-digit equations with a hidden value. Maximum camber is 3.1428 % of chord (22/7, the classic approximation of π), located at 40 % chord, with 12 % thickness. It is pitched 6° to the oncoming flow.
 - **Streamlines (gray):** traced through a Hess–Smith panel-method solution of the inviscid, incompressible potential flow around the section, with the Kutta condition at the trailing edge (Cl ≈ 1.13).
-- **Stagnation point (white dot):** where the surface velocity is zero, at x/c = 0.010 on the lower surface just under the nose, as expected at positive angle of attack.
-- **Dividing streamline (white):** the streamline that runs into the stagnation point, and the one that leaves the sharp trailing edge smoothly, as the Kutta condition requires.
+- **Dividing streamline and stagnation point (white):** the white line ends where it meets the surface, at the front stagnation point (zero surface velocity, x/c = 0.010 on the lower surface just under the nose, as expected at positive angle of attack). A second white line leaves the sharp trailing edge smoothly, as the Kutta condition requires.
 
 ## Editing
 
