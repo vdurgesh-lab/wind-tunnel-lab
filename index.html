@@ -232,14 +232,17 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .inst li span{color:var(--muted)}
 
 /* Contact */
-.contact{display:grid;grid-template-columns:auto minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center}
-.contact .portrait{width:clamp(140px,16vw,210px);aspect-ratio:1;object-fit:cover;border-radius:3px;border:1px solid var(--rule-dark)}
+/* Portrait and contact card share one height so their top and bottom edges line up */
+.contact{--pic:clamp(200px,17vw,240px);display:grid;grid-template-columns:auto minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,3.5vw,48px);align-items:center}
+.contact .portrait{width:var(--pic);height:var(--pic);object-fit:cover;border-radius:3px;border:1px solid var(--rule-dark)}
 .contact h2{font-size:clamp(40px,5vw,66px)}
-.contact-card{border:1px solid var(--rule-dark);padding:22px;border-radius:3px;display:grid;gap:10px}
+.contact-card{border:1px solid var(--rule-dark);padding:18px 20px;border-radius:3px;height:var(--pic);display:flex;flex-direction:column;justify-content:space-between;gap:12px;background:var(--ink-2)}
+.contact-card .grp{display:grid;gap:8px}
 .contact-card .mail{font:500 18px var(--mono);color:var(--gold);word-break:break-word;margin:0}
 .contact-card .mail span{color:var(--on-ink-muted)}
-.contact-card .links{display:flex;flex-wrap:wrap;gap:10px}
-.contact-card .links .btn{flex:1 1 auto;justify-content:center}
+.contact-card .links{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.contact-card .links .btn{justify-content:center;padding:9px 10px;font-size:14px;white-space:nowrap}
+.contact-card .links .btn:first-child{grid-column:1/-1}
 .site-foot{background:var(--ink);color:var(--on-ink-muted);font-size:13px;border-top:1px solid var(--rule-dark);padding-block:22px}
 .site-foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
@@ -259,7 +262,13 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .lab-frame{position:relative;height:0;padding-top:75%}
   .lab-frame img{position:absolute;top:0;right:0;bottom:0;left:0}
   .rcard img{height:auto}
-  .contact .portrait{height:clamp(140px,16vw,210px)}
+}
+@media (max-width:1180px){
+  .contact{grid-template-columns:auto minmax(0,1fr)}
+  .contact-card{grid-column:1/-1;height:auto;flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:16px 40px}
+  .contact-card .grp:last-child{flex:1 1 420px}
+  .contact-card .links{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .contact-card .links .btn:first-child{grid-column:auto}
 }
 @media (max-width:1100px){
   .brand small{display:none}
@@ -273,8 +282,6 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 }
 @media (max-width:1020px){
   .study-body,.facility,.hero-grid{grid-template-columns:1fr}
-  .contact{grid-template-columns:auto 1fr}
-  .contact-card{grid-column:1/-1}
   .inst{grid-template-columns:1fr}
   .people{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto}
   .people figure{aspect-ratio:4/3}
@@ -306,6 +313,10 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .plif-view{height:auto!important;width:min(100%,300px)!important;aspect-ratio:480/778;margin:12px auto 0}
   .slide.pair{gap:6px;padding:6px}
   .contact{grid-template-columns:1fr}
+  .contact-card{flex-direction:column;align-items:stretch}
+  .contact-card .grp:last-child{flex:none}
+  .contact-card .links{grid-template-columns:1fr 1fr}
+  .contact-card .links .btn:first-child{grid-column:1/-1}
 }
 @media (max-width:420px){.rindex,.caps{grid-template-columns:1fr}}
 </style>
@@ -705,13 +716,17 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <p class="muted">Associate Professor of Mechanical Engineering. Dr. Durgesh studies low-Reynolds-number aerodynamics with wind and water tunnel experiments. Get in touch about research collaborations, student projects or lab demonstrations.</p>
     </div>
     <div class="contact-card">
-      <span class="eyebrow">Email</span>
-      <p class="mail" aria-label="Email: vdurgesh at uidaho dot edu">vdurgesh <span>at</span> uidaho <span>dot</span> edu</p>
-      <span class="eyebrow" style="margin-top:8px">Profiles</span>
-      <div class="links">
-        <a class="btn btn-solid" href="https://www.uidaho.edu/people/vdurgesh" rel="noopener">Faculty profile ↗</a>
-        <a class="btn btn-ghost" href="https://scholar.google.com/citations?user=RkXIN38AAAAJ&amp;hl=en" rel="noopener">Google Scholar ↗</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/vibhavdurgesh/" rel="noopener">LinkedIn ↗</a>
+      <div class="grp">
+        <span class="eyebrow">Email</span>
+        <p class="mail" aria-label="Email: vdurgesh at uidaho dot edu">vdurgesh <span>at</span> uidaho <span>dot</span> edu</p>
+      </div>
+      <div class="grp">
+        <span class="eyebrow">Profiles</span>
+        <div class="links">
+          <a class="btn btn-solid" href="https://www.uidaho.edu/people/vdurgesh" rel="noopener">Faculty profile ↗</a>
+          <a class="btn btn-ghost" href="https://scholar.google.com/citations?user=RkXIN38AAAAJ&amp;hl=en" rel="noopener">Google Scholar ↗</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/vibhavdurgesh/" rel="noopener">LinkedIn ↗</a>
+        </div>
       </div>
     </div>
   </div>
