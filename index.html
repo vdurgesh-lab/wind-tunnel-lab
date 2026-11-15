@@ -137,12 +137,14 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .rnav a[aria-current="true"]{color:var(--on-ink);border-color:var(--gold)}
 .rnav a[aria-current="true"] i{color:var(--accent-text)}
 
-.study{padding-block:clamp(48px,6vw,80px);border-top:1px solid var(--rule-dark)}
+.study{padding-block:clamp(40px,5vw,64px);border-top:1px solid var(--rule-dark)}
 .study:first-of-type{border-top:0}
-.study-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,32px);align-items:end;margin-bottom:28px}
-.study-num{font:600 clamp(56px,7vw,92px)/.78 var(--display);color:var(--accent-display)}
-.study-head h2{font-size:clamp(32px,3.6vw,48px);margin-top:6px}
-.study-body{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(24px,3.5vw,44px);align-items:start}
+.study-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,28px);align-items:end;margin-bottom:22px}
+.study-num{font:600 clamp(48px,5.5vw,76px)/.78 var(--display);color:var(--accent-display)}
+.study-head h2{font-size:clamp(28px,3vw,40px);margin-top:6px}
+/* Research media stays a modest, fixed size so six studies read as a set */
+.study-body{display:grid;grid-template-columns:minmax(0,600px) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.study-body .notes{max-width:560px}
 
 /* Every research figure sits in the same 16:10 frame and keeps its own proportions */
 .stage{position:relative;aspect-ratio:16/10;background:var(--matte);border:1px solid var(--rule-dark);border-radius:3px;overflow:hidden}
@@ -162,6 +164,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .expand:hover{background:var(--gold)}
 .expand[hidden]{display:none}
 .stage-cap{min-height:3em}
+.thumbs[hidden]{display:none}
 .thumbs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .thumbs button{width:92px;aspect-ratio:4/3;padding:4px;background:var(--matte);border:2px solid var(--rule-dark);border-radius:2px;cursor:pointer;opacity:.7;transition:opacity .15s,border-color .15s}
 .thumbs button img{width:100%;height:100%;object-fit:contain}
@@ -198,7 +201,7 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .plif-view canvas{width:100%;height:100%;cursor:crosshair}
 .plif-hud{position:absolute;left:8px;top:8px;font:500 11.5px/1.5 var(--mono);color:#fff;background:rgba(0,0,0,.55);padding:5px 7px;border-radius:2px;pointer-events:none;font-variant-numeric:tabular-nums}
 .plif-bar{position:absolute;right:8px;top:8px;bottom:8px;width:8px;border-radius:2px;border:1px solid rgba(255,255,255,.25)}
-.plif-panel{padding:16px 18px;display:grid;gap:14px;align-content:start;overflow:auto;min-width:0}
+.plif-panel{padding:12px 14px;display:grid;gap:10px;align-content:start;overflow:auto;min-width:0}
 .plif-panel>*{min-width:0}
 .field{display:grid;gap:7px}
 .lab{font:500 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-muted)}
@@ -283,7 +286,9 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .project-video video{width:100%;aspect-ratio:16/9;background:#000;border-radius:2px}
 
 /* Facility */
-.facility{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.facility{display:grid;grid-template-columns:minmax(0,480px) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.fac-specs{display:grid;gap:28px;max-width:620px}
+.fac-specs h3{font-size:24px}
 .facility img{width:100%;border-radius:3px}
 .spec-table{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
 .spec-table th,.spec-table td{text-align:left;padding:11px 0;border-bottom:1px solid var(--rule-dark);vertical-align:top}
@@ -351,6 +356,8 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 }
 @media (max-width:1020px){
   .study-body,.facility,.hero-grid{grid-template-columns:1fr}
+  .study-body>div:first-child{max-width:640px}
+  .facility>figure{max-width:560px}
   .inst{grid-template-columns:1fr}
   .people{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto}
   .people figure{aspect-ratio:4/3}
@@ -522,6 +529,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
             <button class="icon-btn" id="gFwd" aria-label="Forward one frame">⏭</button>
             <input class="scrub" id="gScrub" type="range" min="0" max="20.4" step="0.2" value="0" aria-label="Position in video">
             <span class="readout" id="gTime">0.0 / 20.4 s</span>
+            <button class="icon-btn" id="gFull" aria-label="Full screen" title="Full screen">⤢</button>
             <div class="seg" role="group" aria-label="Playback speed" id="gSpeed"><button data-rate="0.25" aria-pressed="false">¼×</button><button data-rate="0.5" aria-pressed="false">½×</button><button data-rate="1" aria-pressed="true">1×</button><button data-rate="2" aria-pressed="false">2×</button></div>
           </div>
           <p class="stage-cap figcaption muted" style="font-size:13.5px;margin-top:10px"></p>
@@ -844,21 +852,35 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 
 <!-- FACILITY -->
 <section class="band dark" id="facility" aria-labelledby="fac-title">
-  <div class="wrap facility">
-    <figure>
-      <img src="assets/img/tunnel-labeled.jpg" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1800" height="1273" loading="lazy">
-      <figcaption>Air enters at the inlet, speeds up through the effuser into the test section, then slows in the diffuser. A variable frequency drive (VFD) sets fan speed.</figcaption>
-    </figure>
-    <div>
-      <div class="eyebrow">The facility</div>
-      <h2 id="fac-title" style="margin:12px 0 16px">The test section</h2>
-      <p class="muted">A variable-speed fan draws air through a 6.25:1 contraction into a transparent test section with optical access for laser diagnostics.</p>
-      <table class="spec-table">
-        <tr><th scope="row">Test section</th><td>18 × 18 × 36 in<br><span class="muted">45.7 × 45.7 × 91.4 cm (W × H × L)</span></td></tr>
-        <tr><th scope="row">Speed range</th><td>Below 3.1 m/s to above 67.1 m/s<br><span class="muted">&lt;10 ft/s to &gt;220 ft/s, open-ended bounds per manufacturer</span></td></tr>
-        <tr><th scope="row">Layout</th><td>Open circuit, variable-speed fan</td></tr>
-        <tr><th scope="row">Contraction</th><td>6.25 : 1</td></tr>
-      </table>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Facilities</div>
+      <h2 id="fac-title">Two tunnels, air and water</h2>
+      <p class="muted lede">A low-speed wind tunnel for aerodynamic measurements and a small water tunnel for flow visualization.</p>
+    </div>
+    <div class="facility">
+      <figure>
+        <img src="assets/img/tunnel-labeled.jpg" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1800" height="1273" loading="lazy">
+        <figcaption>The wind tunnel. Air enters at the inlet, speeds up through the effuser into the test section, then slows in the diffuser. A variable frequency drive (VFD) sets fan speed.</figcaption>
+      </figure>
+      <div class="fac-specs">
+        <section aria-labelledby="fac-wind">
+          <h3 id="fac-wind">Wind tunnel</h3>
+          <table class="spec-table">
+            <tr><th scope="row">Test section</th><td>18 × 18 × 36 in<br><span class="muted">45.7 × 45.7 × 91.4 cm (W × H × L)</span></td></tr>
+            <tr><th scope="row">Speed range</th><td>Below 3.1 m/s to above 67.1 m/s<br><span class="muted">&lt;10 ft/s to &gt;220 ft/s, open-ended bounds per manufacturer</span></td></tr>
+            <tr><th scope="row">Layout</th><td>Open circuit, variable-speed fan, 6.25 : 1 contraction</td></tr>
+            <tr><th scope="row">Access</th><td>Transparent walls for laser diagnostics</td></tr>
+          </table>
+        </section>
+        <section aria-labelledby="fac-water">
+          <h3 id="fac-water">EFD water tunnel</h3>
+          <table class="spec-table">
+            <tr><th scope="row">Test section</th><td>6 × 6 in<br><span class="muted">15.2 × 15.2 cm</span></td></tr>
+            <tr><th scope="row">Use</th><td>Flow visualization</td></tr>
+          </table>
+        </section>
+      </div>
     </div>
   </div>
 </section>
@@ -1033,6 +1055,7 @@ document.querySelectorAll('.stage.gallery').forEach(stage => {
   const toggle = () => { if (v.paused) { delete v.dataset.userPaused; v.play().catch(()=>{}); } else { v.dataset.userPaused = '1'; v.pause(); } };
   play.addEventListener('click', toggle); v.addEventListener('click', toggle);
   const step = s => { v.dataset.userPaused='1'; v.pause(); v.currentTime = Math.min(Math.max(0, Math.round(v.currentTime/dt)*dt + s*dt), (v.duration||20.4) - dt/2); };
+  $('gFull').addEventListener('click', () => { const f = v.requestFullscreen || v.webkitRequestFullscreen || v.webkitEnterFullscreen; if (f) { try { const r = f.call(v); if (r && r.catch) r.catch(()=>{}); } catch (e) {} } });
   $('gBack').addEventListener('click', () => step(-1)); $('gFwd').addEventListener('click', () => step(1));
   scrub.addEventListener('input', () => { dragging = true; v.currentTime = +scrub.value; });
   scrub.addEventListener('change', () => { dragging = false; });
