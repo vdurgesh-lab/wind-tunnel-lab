@@ -271,15 +271,21 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .alumni-photo img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:50% 35%;border-radius:3px}
 
 /* Student project */
-.project{display:grid;align-items:start;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:clamp(20px,3vw,36px);background:var(--paper-2);border:1px solid var(--rule);border-radius:3px;padding:clamp(14px,2vw,22px)}
-.project-photo{margin:0}
-.project-photo img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:2px}
-.project-body{display:grid;gap:16px;align-content:start}
+.project{display:grid;gap:18px;background:var(--paper-2);border:1px solid var(--rule);border-radius:3px;padding:clamp(16px,2.4vw,26px)}
+.project-body{display:grid;gap:14px}
 .project-body h4{margin:0;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.checks{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:15px}
+.checks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 36px;font-size:15px;max-width:1040px}
 .checks li{display:grid;grid-template-columns:18px 1fr;gap:8px}
 .checks li::before{content:"";width:8px;height:8px;margin-top:8px;border-radius:50%;background:var(--gold)}
-.project-video video{width:100%;aspect-ratio:16/9;background:#000;border-radius:2px}
+/* Photo and video share one height: each grows in proportion to its aspect ratio */
+.project-media{display:flex;gap:12px;max-width:920px}
+.pm{margin:0;min-width:0}
+.pm-photo{flex:0.6667 1 0}
+.pm-video{flex:1.7778 1 0}
+.pm img,.pm video{display:block;width:100%;object-fit:cover;border-radius:2px;background:#000}
+.pm img{aspect-ratio:2/3}
+.pm video{aspect-ratio:16/9}
+.project-cap{font-size:13.5px;color:var(--muted);margin:-6px 0 0}
 
 /* Facility */
 .fac-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,36px);align-items:start}
@@ -362,6 +368,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .tcard{grid-template-columns:1fr}
   .labs{grid-template-columns:repeat(2,minmax(0,1fr))}
   .members{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .checks{grid-template-columns:1fr}
   .alumni{grid-template-columns:minmax(0,1fr) minmax(0,260px)}
   .labs-head{grid-template-columns:1fr}
 }
@@ -389,8 +396,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .members{grid-template-columns:1fr}
   .alumni{grid-template-columns:1fr}
   .alumni-photo{max-width:320px}
-  .project{grid-template-columns:1fr}
-  .project-photo img{aspect-ratio:4/5;height:auto}
+  .project-media{gap:8px}
   /* pLIF stacks: the frame becomes the tool's own height */
   .stage.tool{aspect-ratio:auto;height:auto;padding-top:0}
   .plif-tool{position:static;grid-template-columns:1fr}
@@ -819,7 +825,6 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
       <p class="muted">Students designed, built and flew a flying wing with a bell-shaped span load, following the design rules in NASA&rsquo;s Prandtl-wing patent.</p>
     </div>
     <article class="project">
-      <figure class="project-photo"><img src="assets/img/prandtl-wing.jpg" alt="The student-built Prandtl flying wing on the floor, with gold wingtips and a University of Idaho I on the center section" width="1000" height="1500" loading="lazy"></figure>
       <div class="project-body">
         <h4>What makes it a Prandtl wing</h4>
         <ul class="checks">
@@ -829,11 +834,12 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
           <li><span>The span is 1.22 times that of an elliptically loaded wing carrying the same lift.</span></li>
           <li><span>A small dihedral angle; NASA used 2.5°.</span></li>
         </ul>
-        <figure class="project-video">
-          <video src="assets/video/prandtl-flight-test-02.mp4" poster="assets/img/prandtl-flight-poster.jpg" muted playsinline webkit-playsinline controls preload="metadata" aria-label="Flight test 2 of the Prandtl wing over farm fields"></video>
-          <figcaption>Flight test 2. The wing is the small dark shape against the sky.</figcaption>
-        </figure>
       </div>
+      <div class="project-media">
+        <figure class="pm pm-photo"><img src="assets/img/prandtl-wing.jpg" alt="The student-built Prandtl flying wing on the floor, with gold wingtips and a University of Idaho I on the center section" width="1000" height="1500" loading="lazy"></figure>
+        <figure class="pm pm-video"><video src="assets/video/prandtl-flight-test-02.mp4" poster="assets/img/prandtl-flight-poster.jpg" muted playsinline webkit-playsinline controls preload="metadata" aria-label="Flight test 2 of the Prandtl wing over farm fields"></video></figure>
+      </div>
+      <p class="project-cap">Left: the student-built wing. Right: flight test 2; the wing is the small dark shape against the sky.</p>
     </article>
 
     <div class="outreach">
