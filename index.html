@@ -264,7 +264,12 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .alumni-list .deg{grid-column:1;font-size:14px;color:var(--muted)}
 .alumni-list .when{grid-column:2;grid-row:1;font:500 13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .alumni-list .now{grid-column:1/-1;font-size:14px;color:var(--gold-deep)}
-.alumni-photo img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px}
+.photo-pair{position:relative}
+.photo-pair img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px}
+.photo-pair img[hidden]{display:none}
+.photo-dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:8px}
+.photo-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1.5px solid #fff;background:rgba(0,0,0,.35);cursor:pointer}
+.photo-dots button[aria-pressed="true"]{background:#fff}
 
 /* Student project */
 .project{display:grid;align-items:start;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:clamp(20px,3vw,36px);background:var(--paper-2);border:1px solid var(--rule);border-radius:3px;padding:clamp(14px,2vw,22px)}
@@ -752,7 +757,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
     <div class="team-panel" id="panel-current" role="tabpanel" aria-labelledby="tab-current">
       <ul class="members">
           <li class="member"><span class="avatar" aria-hidden="true">RP</span><span><b>Rodrigo Padilla</b><span>Ph.D. researcher</span></span></li>
-          <li class="member"><span class="avatar" aria-hidden="true">J</span><span><b>Jasmeen</b><span>Graduate researcher</span></span></li>
+          <li class="member"><span class="avatar" aria-hidden="true">JM</span><span><b>Jasmeen Manshahia</b><span>Graduate researcher</span></span></li>
           <li class="member"><span class="avatar" aria-hidden="true">OW</span><span><b>Owen Wooster</b><span>Graduate researcher</span></span></li>
           <li class="member"><span class="avatar" aria-hidden="true">NS</span><span><b>Nate Sinnot</b><span>Graduate researcher</span></span></li>
           <li class="member"><span class="avatar" aria-hidden="true">TB</span><span><b>Timothy Butler</b><span>Graduate researcher</span></span></li>
@@ -769,7 +774,13 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
             <li><b>Emily Mack</b><span class="deg">M.Eng., Mechanical Engineering</span><span class="when">Dec 2025</span></li>
         </ol>
         <figure class="alumni-photo">
-          <img src="assets/img/commencement-2021-a.jpg" alt="Dr. Durgesh with graduates in caps and gowns at the University of Idaho commencement" width="1400" height="933" loading="lazy">
+          <div class="photo-pair" id="alumniPhotos">
+            <img src="assets/img/commencement-2021-a.jpg" alt="Dr. Durgesh with two graduates in caps and gowns at the University of Idaho commencement" width="1400" height="933" loading="lazy">
+            <img src="assets/img/commencement-2021-b.jpg" alt="Dr. Durgesh with a doctoral graduate in University of Idaho regalia at commencement" width="1400" height="933" loading="lazy" hidden>
+            <div class="photo-dots" role="group" aria-label="Commencement photos">
+              <button type="button" aria-label="Photo 1" aria-pressed="true"></button><button type="button" aria-label="Photo 2" aria-pressed="false"></button>
+            </div>
+          </div>
           <figcaption>Spring 2021 commencement at the University of Idaho.</figcaption>
         </figure>
       </div>
@@ -990,6 +1001,16 @@ document.querySelectorAll('.stage.gallery').forEach(stage => {
   const tabs = [$('tab-current'), $('tab-alumni')], panels = [$('panel-current'), $('panel-alumni')];
   function pick(i){ tabs.forEach((t,j) => { t.setAttribute('aria-selected', j===i ? 'true' : 'false'); t.tabIndex = j===i ? 0 : -1; panels[j].hidden = j!==i; }); }
   tabs.forEach((t,i) => { t.addEventListener('click', () => pick(i)); t.addEventListener('keydown', e => { if (e.key==='ArrowRight' || e.key==='ArrowLeft') { e.preventDefault(); const j = 1 - i; pick(j); tabs[j].focus(); } }); });
+})();
+
+/* ---------- Commencement photos ---------- */
+(() => {
+  const box = $('alumniPhotos'); if (!box) return;
+  const imgs = [...box.querySelectorAll('img')], dots = [...box.querySelectorAll('.photo-dots button')];
+  let cur = 0, timer = null;
+  function show(i){ cur = i; imgs.forEach((im,j) => im.hidden = j!==i); dots.forEach((d,j) => d.setAttribute('aria-pressed', j===i ? 'true' : 'false')); }
+  dots.forEach((d,i) => d.addEventListener('click', () => { clearInterval(timer); show(i); }));
+  if (!reduceMotion) timer = setInterval(() => { if (!$('panel-alumni').hidden) show((cur+1) % imgs.length); }, 5000);
 })();
 
 /* ---------- Research sub-nav: highlight the study in view ---------- */
