@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">
+  <title>Recirculating flow-visualization water tunnel (illustration)</title>
+  <desc>Generic illustration of a 6 by 6 inch flow-visualization water tunnel: settling chamber, contraction, transparent test section with dye streaks around a cylinder, return leg and pump.</desc>
+  <rect width="600" height="300" fill="#F4F5F3"/>
+  <!-- floor and stand -->
+  <line x1="20" y1="282" x2="580" y2="282" stroke="#C9CFCC" stroke-width="2"/>
+  <g fill="#9AA5A9">
+    <rect x="96" y="150" width="8" height="132"/><rect x="250" y="122" width="8" height="160"/>
+    <rect x="400" y="122" width="8" height="160"/><rect x="520" y="150" width="8" height="132"/>
+  </g>
+  <!-- return pipe -->
+  <path d="M520 132 V226 Q520 238 508 238 H88 Q76 238 76 226 V150" fill="none" stroke="#5E8FB0" stroke-width="16" stroke-linejoin="round"/>
+  <path d="M520 132 V226 Q520 238 508 238 H88 Q76 238 76 226 V150" fill="none" stroke="#9CC7E0" stroke-width="10" stroke-linejoin="round"/>
+  <!-- pump -->
+  <circle cx="440" cy="238" r="20" fill="#3F4A50"/><circle cx="440" cy="238" r="7" fill="#F1B300"/>
+  <rect x="428" y="258" width="24" height="24" fill="#3F4A50"/>
+  <!-- settling chamber + contraction -->
+  <path d="M52 40 H118 Q150 40 168 66 Q178 78 196 78 V122 Q178 122 168 134 Q150 160 118 160 H52 Z" fill="#9CC7E0" stroke="#3F4A50" stroke-width="3" stroke-linejoin="round"/>
+  <g stroke="#3F4A50" stroke-width="1.2" opacity=".55"><line x1="70" y1="46" x2="70" y2="154"/><line x1="78" y1="46" x2="78" y2="154"/><line x1="86" y1="46" x2="86" y2="154"/></g>
+  <!-- test section (transparent) -->
+  <rect x="196" y="78" width="214" height="44" fill="#DDEEF7" stroke="#3F4A50" stroke-width="3"/>
+  <!-- diffuser + outlet plenum -->
+  <path d="M410 78 Q440 78 460 70 L500 60 H540 V150 H500 L460 130 Q440 122 410 122 Z" fill="#9CC7E0" stroke="#3F4A50" stroke-width="3" stroke-linejoin="round"/>
+  <!-- dye streaks and cylinder wake -->
+  <g fill="none" stroke-width="2" stroke-linecap="round">
+    <path d="M200 86 H252 Q262 86 268 84 Q300 80 330 88 T390 88 L408 88" stroke="#C0392B"/>
+    <path d="M200 100 H244" stroke="#2E7D32"/>
+    <path d="M200 114 H252 Q262 114 268 116 Q300 120 330 112 T390 112 L408 112" stroke="#C0392B"/>
+    <path d="M274 100 Q290 90 304 100 T334 100 T364 100 T394 100 L408 100" stroke="#2E7D32"/>
+  </g>
+  <circle cx="258" cy="100" r="9" fill="#3F4A50"/>
+  <!-- flow arrows -->
+  <g fill="#3F4A50"><path d="M290 238 l10 -6 v12 z"/><path d="M520 196 l-6 -10 h12 z"/><path d="M76 176 l-6 10 h12 z"/></g>
+  <!-- labels -->
+  <g font-size="12" fill="#3F4A50">
+    <text x="303" y="64" text-anchor="middle" font-weight="600">Test section · 6 × 6 × 18 in</text>
+    <line x1="303" y1="68" x2="303" y2="78" stroke="#3F4A50"/>
+    <text x="85" y="30" text-anchor="middle">Settling chamber</text>
+    <text x="440" y="208" text-anchor="middle">Pump</text>
+    <text x="300" y="266" text-anchor="middle">Return leg</text>
+    <text x="262" y="146" text-anchor="middle" font-size="11" fill="#535C60">Dye streaks around a cylinder</text>
+  </g>
+  <text x="590" y="294" text-anchor="end" font-size="10" fill="#7A858A">Illustration</text>
+</svg>

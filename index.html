@@ -286,10 +286,12 @@ figcaption{font-size:13.5px;line-height:1.5;margin-top:10px;color:var(--muted)}
 .project-video video{width:100%;aspect-ratio:16/9;background:#000;border-radius:2px}
 
 /* Facility */
-.facility{display:grid;grid-template-columns:minmax(0,480px) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
-.fac-specs{display:grid;gap:28px;max-width:620px}
-.fac-specs h3{font-size:24px}
-.facility img{width:100%;border-radius:3px}
+.fac-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,36px);align-items:start}
+.fac-card{display:grid;gap:14px}
+.fac-media{margin:0;aspect-ratio:2/1;background:var(--ink-2);border:1px solid var(--rule-dark);border-radius:3px;overflow:hidden}
+.fac-media.light{background:#F4F5F3}
+.fac-media img{width:100%;height:100%;object-fit:contain}
+.fac-card h3{font-size:26px;margin-top:4px}
 .spec-table{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
 .spec-table th,.spec-table td{text-align:left;padding:11px 0;border-bottom:1px solid var(--rule-dark);vertical-align:top}
 .spec-table th{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-muted);width:40%;padding-right:12px;padding-top:14px}
@@ -355,9 +357,8 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .caps{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:1020px){
-  .study-body,.facility,.hero-grid{grid-template-columns:1fr}
+  .study-body,.hero-grid{grid-template-columns:1fr}
   .study-body>div:first-child{max-width:640px}
-  .facility>figure{max-width:560px}
   .inst{grid-template-columns:1fr}
   .people{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto}
   .people figure{aspect-ratio:4/3}
@@ -386,6 +387,7 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
   .study-head{grid-template-columns:auto 1fr}
   .study-head .tags{grid-column:1/-1}
   .cards2{grid-template-columns:1fr}
+  .fac-grid{grid-template-columns:1fr}
   .people{grid-template-columns:1fr}
   .people figure:first-child{grid-column:auto}
   .labs{grid-template-columns:1fr}
@@ -854,33 +856,34 @@ dialog.lightbox .close{position:absolute;right:8px;top:8px;width:38px;height:38p
 <section class="band dark" id="facility" aria-labelledby="fac-title">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">Facilities</div>
-      <h2 id="fac-title">Two tunnels, air and water</h2>
-      <p class="muted lede">A low-speed wind tunnel for aerodynamic measurements and a small water tunnel for flow visualization.</p>
+      <div class="eyebrow">Wind tunnel and water tunnel</div>
+      <h2 id="fac-title">Facilities</h2>
     </div>
-    <div class="facility">
-      <figure>
-        <img src="assets/img/tunnel-labeled.jpg" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1800" height="1273" loading="lazy">
-        <figcaption>The wind tunnel. Air enters at the inlet, speeds up through the effuser into the test section, then slows in the diffuser. A variable frequency drive (VFD) sets fan speed.</figcaption>
-      </figure>
-      <div class="fac-specs">
-        <section aria-labelledby="fac-wind">
-          <h3 id="fac-wind">Wind tunnel</h3>
-          <table class="spec-table">
-            <tr><th scope="row">Test section</th><td>18 × 18 × 36 in<br><span class="muted">45.7 × 45.7 × 91.4 cm (W × H × L)</span></td></tr>
-            <tr><th scope="row">Speed range</th><td>Below 3.1 m/s to above 67.1 m/s<br><span class="muted">&lt;10 ft/s to &gt;220 ft/s, open-ended bounds per manufacturer</span></td></tr>
-            <tr><th scope="row">Layout</th><td>Open circuit, variable-speed fan, 6.25 : 1 contraction</td></tr>
-            <tr><th scope="row">Access</th><td>Transparent walls for laser diagnostics</td></tr>
-          </table>
-        </section>
-        <section aria-labelledby="fac-water">
-          <h3 id="fac-water">EFD water tunnel</h3>
-          <table class="spec-table">
-            <tr><th scope="row">Test section</th><td>6 × 6 in<br><span class="muted">15.2 × 15.2 cm</span></td></tr>
-            <tr><th scope="row">Use</th><td>Flow visualization</td></tr>
-          </table>
-        </section>
-      </div>
+    <div class="fac-grid">
+      <article class="fac-card" aria-labelledby="fac-wind">
+        <figure class="fac-media">
+          <img src="assets/img/tunnel-labeled.jpg" alt="The blue open-circuit wind tunnel with labels for the inlet, effuser, test section, diffuser, outlet and variable frequency drive" width="1693" height="1273" loading="lazy">
+        </figure>
+        <h3 id="fac-wind">Wind tunnel</h3>
+        <table class="spec-table">
+          <tr><th scope="row">Test section</th><td>18 × 18 × 36 in<br><span class="muted">45.7 × 45.7 × 91.4 cm (W × H × L)</span></td></tr>
+          <tr><th scope="row">Speed range</th><td>Below 3.1 m/s to above 67.1 m/s<br><span class="muted">&lt;10 ft/s to &gt;220 ft/s, open-ended bounds per manufacturer</span></td></tr>
+          <tr><th scope="row">Layout</th><td>Open circuit, variable-speed fan, 6.25 : 1 contraction</td></tr>
+          <tr><th scope="row">Access</th><td>Transparent walls for laser diagnostics</td></tr>
+        </table>
+      </article>
+      <article class="fac-card" aria-labelledby="fac-water">
+        <figure class="fac-media light">
+          <img src="assets/img/water-tunnel-illustration.svg" alt="Illustration of a recirculating flow-visualization water tunnel with a settling chamber, contraction, transparent test section, return leg and pump" width="600" height="300" loading="lazy">
+        </figure>
+        <h3 id="fac-water">Water tunnel</h3>
+        <table class="spec-table">
+          <tr><th scope="row">Type</th><td>ELD recirculating flow-visualization tunnel</td></tr>
+          <tr><th scope="row">Test section</th><td>6 × 6 × 18 in<br><span class="muted">15.2 × 15.2 × 45.7 cm (W × H × L)</span></td></tr>
+          <tr><th scope="row">Flow speed</th><td>0.1 to 1.0 ft/s<br><span class="muted">0.03 to 0.30 m/s, set by pump speed</span></td></tr>
+          <tr><th scope="row">Use</th><td>Dye flow visualization</td></tr>
+        </table>
+      </article>
     </div>
   </div>
 </section>
