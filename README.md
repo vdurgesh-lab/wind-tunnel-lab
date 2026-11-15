@@ -47,7 +47,8 @@ Open `index.html` in a browser. Everything works when opened from disk, includin
 
 ## Editing
 
-- Text, links and captions are in `index.html`. Search for the section ids: `capabilities`, `research`, `gust`, `plif`, `ofi`, `owl`, `flag`, `people`, `facility`, `instruments`, `contact`.
+- Text, links and captions are in `index.html`. Search for the section ids: `capabilities`, `research`, `gust`, `plif`, `ofi`, `owl`, `flag`, `aneurysm`, `team`, `people`, `facility`, `instruments`, `contact`.
+- Graduate students: the `team` section has two lists, `members` (current students) and `alumni-list` (graduated). Copy an existing `<li>` to add a person, and update the count shown on each tab button.
 - To replace an image, keep the same file name in `assets/img/`, or update the `src` in `index.html`.
 - Light and dark themes: the sun/moon button in the header switches between them. Dark is the default; each visitor's choice is remembered in their browser. All theme colors are CSS variables at the top of `index.html` (`:root` for dark, `:root[data-theme="light"]` for light).
 - Research figures sit in fixed 16:10 frames and keep their own proportions, so any figure size works.
